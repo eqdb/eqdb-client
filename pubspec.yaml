@@ -1,0 +1,10 @@
+name:         eqpg_client
+version:      0.0.0
+author:       Herman Bergwerf <hermanbergwerf@gmail.com>
+description:  EqPG HTTP API client
+homepage:     https://github.com/eqdb/eqpg-client
+environment:
+  sdk:        '>=1.8.0 <2.0.0'
+dependencies:
+  http:       '>=0.11.1 <0.12.0'
+  _discoveryapis_commons: '>=0.1.0 <0.2.0'
