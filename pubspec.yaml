@@ -1,7 +1,7 @@
 name:         eqdb_client
 version:      0.0.1
 author:       Herman Bergwerf <hermanbergwerf@gmail.com>
-description:  EqPG HTTP API client
+description:  EqDB HTTP API client
 homepage:     https://github.com/eqdb/eqpg-client
 environment:
   sdk:        '>=1.8.0 <2.0.0'
