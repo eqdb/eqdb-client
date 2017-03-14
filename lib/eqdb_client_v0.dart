@@ -1294,6 +1294,7 @@ class OperatorResource {
    */
   core.String associativity;
   core.String character;
+  core.String editorTemplate;
   FunctionResource function;
   core.int id;
   /**
@@ -1314,6 +1315,9 @@ class OperatorResource {
     }
     if (_json.containsKey("character")) {
       character = _json["character"];
+    }
+    if (_json.containsKey("editorTemplate")) {
+      editorTemplate = _json["editorTemplate"];
     }
     if (_json.containsKey("function")) {
       function = new FunctionResource.fromJson(_json["function"]);
@@ -1336,6 +1340,9 @@ class OperatorResource {
     }
     if (character != null) {
       _json["character"] = character;
+    }
+    if (editorTemplate != null) {
+      _json["editorTemplate"] = editorTemplate;
     }
     if (function != null) {
       _json["function"] = (function).toJson();
