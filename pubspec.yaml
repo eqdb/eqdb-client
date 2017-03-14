@@ -1,4 +1,4 @@
-name:         eqpg_client
+name:         eqdb_client
 version:      0.0.0
 author:       Herman Bergwerf <hermanbergwerf@gmail.com>
 description:  EqPG HTTP API client
