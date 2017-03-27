@@ -769,6 +769,44 @@ class EqdbApi {
         downloadOptions: _downloadOptions);
     return _response.then((data) => new DescriptorResource.fromJson(data));
   }
+
+  /**
+   * [request] - The metadata request object.
+   *
+   * Request parameters:
+   *
+   * Completes with a [ExpressionDifferenceResource].
+   *
+   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
+   * error.
+   *
+   * If the used [http.Client] completes with an error when making a REST call,
+   * this method will complete with the same error.
+   */
+  async.Future<ExpressionDifferenceResource> resolveExpressionDifference(
+      ExpressionDifferenceResource request) {
+    var _url = null;
+    var _queryParams = new core.Map();
+    var _uploadMedia = null;
+    var _uploadOptions = null;
+    var _downloadOptions = commons.DownloadOptions.Metadata;
+    var _body = null;
+
+    if (request != null) {
+      _body = convert.JSON.encode((request).toJson());
+    }
+
+    _url = 'expressionDifference/resolve';
+
+    var _response = _requester.request(_url, "POST",
+        body: _body,
+        queryParams: _queryParams,
+        uploadOptions: _uploadOptions,
+        uploadMedia: _uploadMedia,
+        downloadOptions: _downloadOptions);
+    return _response
+        .then((data) => new ExpressionDifferenceResource.fromJson(data));
+  }
 }
 
 class CategoryResource {
@@ -857,6 +895,83 @@ class DescriptorResource {
     if (translations != null) {
       _json["translations"] =
           translations.map((value) => (value).toJson()).toList();
+    }
+    return _json;
+  }
+}
+
+class DifferenceBranch {
+  core.List<DifferenceBranch> arguments;
+  core.bool different;
+  RuleResource rule;
+  core.bool unresolved;
+
+  DifferenceBranch();
+
+  DifferenceBranch.fromJson(core.Map _json) {
+    if (_json.containsKey("arguments")) {
+      arguments = _json["arguments"]
+          .map((value) => new DifferenceBranch.fromJson(value))
+          .toList();
+    }
+    if (_json.containsKey("different")) {
+      different = _json["different"];
+    }
+    if (_json.containsKey("rule")) {
+      rule = new RuleResource.fromJson(_json["rule"]);
+    }
+    if (_json.containsKey("unresolved")) {
+      unresolved = _json["unresolved"];
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (arguments != null) {
+      _json["arguments"] = arguments.map((value) => (value).toJson()).toList();
+    }
+    if (different != null) {
+      _json["different"] = different;
+    }
+    if (rule != null) {
+      _json["rule"] = (rule).toJson();
+    }
+    if (unresolved != null) {
+      _json["unresolved"] = unresolved;
+    }
+    return _json;
+  }
+}
+
+class ExpressionDifferenceResource {
+  DifferenceBranch difference;
+  ExpressionResource left;
+  ExpressionResource right;
+
+  ExpressionDifferenceResource();
+
+  ExpressionDifferenceResource.fromJson(core.Map _json) {
+    if (_json.containsKey("difference")) {
+      difference = new DifferenceBranch.fromJson(_json["difference"]);
+    }
+    if (_json.containsKey("left")) {
+      left = new ExpressionResource.fromJson(_json["left"]);
+    }
+    if (_json.containsKey("right")) {
+      right = new ExpressionResource.fromJson(_json["right"]);
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (difference != null) {
+      _json["difference"] = (difference).toJson();
+    }
+    if (left != null) {
+      _json["left"] = (left).toJson();
+    }
+    if (right != null) {
+      _json["right"] = (right).toJson();
     }
     return _json;
   }
