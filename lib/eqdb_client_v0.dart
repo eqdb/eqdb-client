@@ -903,8 +903,9 @@ class DescriptorResource {
 class DifferenceBranch {
   core.List<DifferenceBranch> arguments;
   core.bool different;
+  core.bool invertRule;
+  core.bool resolved;
   RuleResource rule;
-  core.bool unresolved;
 
   DifferenceBranch();
 
@@ -917,11 +918,14 @@ class DifferenceBranch {
     if (_json.containsKey("different")) {
       different = _json["different"];
     }
+    if (_json.containsKey("invertRule")) {
+      invertRule = _json["invertRule"];
+    }
+    if (_json.containsKey("resolved")) {
+      resolved = _json["resolved"];
+    }
     if (_json.containsKey("rule")) {
       rule = new RuleResource.fromJson(_json["rule"]);
-    }
-    if (_json.containsKey("unresolved")) {
-      unresolved = _json["unresolved"];
     }
   }
 
@@ -933,11 +937,14 @@ class DifferenceBranch {
     if (different != null) {
       _json["different"] = different;
     }
+    if (invertRule != null) {
+      _json["invertRule"] = invertRule;
+    }
+    if (resolved != null) {
+      _json["resolved"] = resolved;
+    }
     if (rule != null) {
       _json["rule"] = (rule).toJson();
-    }
-    if (unresolved != null) {
-      _json["unresolved"] = unresolved;
     }
     return _json;
   }
