@@ -1019,6 +1019,7 @@ class ExpressionResource {
   core.List<core.int> functions;
   core.String hash;
   core.int id;
+  core.String latex;
 
   ExpressionResource();
 
@@ -1035,6 +1036,9 @@ class ExpressionResource {
     if (_json.containsKey("id")) {
       id = _json["id"];
     }
+    if (_json.containsKey("latex")) {
+      latex = _json["latex"];
+    }
   }
 
   core.Map toJson() {
@@ -1050,6 +1054,9 @@ class ExpressionResource {
     }
     if (id != null) {
       _json["id"] = id;
+    }
+    if (latex != null) {
+      _json["latex"] = latex;
     }
     return _json;
   }
@@ -1073,6 +1080,7 @@ class FunctionResource {
    */
   core.String keywordType;
   core.String latexTemplate;
+  core.bool rearrangeable;
 
   FunctionResource();
 
@@ -1101,6 +1109,9 @@ class FunctionResource {
     if (_json.containsKey("latexTemplate")) {
       latexTemplate = _json["latexTemplate"];
     }
+    if (_json.containsKey("rearrangeable")) {
+      rearrangeable = _json["rearrangeable"];
+    }
   }
 
   core.Map toJson() {
@@ -1128,6 +1139,9 @@ class FunctionResource {
     }
     if (latexTemplate != null) {
       _json["latexTemplate"] = latexTemplate;
+    }
+    if (rearrangeable != null) {
+      _json["rearrangeable"] = rearrangeable;
     }
     return _json;
   }
