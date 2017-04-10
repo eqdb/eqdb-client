@@ -176,7 +176,7 @@ class EqdbApi {
    *
    * Request parameters:
    *
-   * Completes with a [ExpressionLineageResource].
+   * Completes with a [LineageResource].
    *
    * Completes with a [commons.ApiRequestError] if the API endpoint returned an
    * error.
@@ -184,8 +184,7 @@ class EqdbApi {
    * If the used [http.Client] completes with an error when making a REST call,
    * this method will complete with the same error.
    */
-  async.Future<ExpressionLineageResource> createLineage(
-      ExpressionLineageResource request) {
+  async.Future<LineageResource> createLineage(LineageCreateData request) {
     var _url = null;
     var _queryParams = new core.Map();
     var _uploadMedia = null;
@@ -197,7 +196,7 @@ class EqdbApi {
       _body = convert.JSON.encode((request).toJson());
     }
 
-    _url = 'expressionLineage/create';
+    _url = 'lineage/create';
 
     var _response = _requester.request(_url, "POST",
         body: _body,
@@ -205,8 +204,7 @@ class EqdbApi {
         uploadOptions: _uploadOptions,
         uploadMedia: _uploadMedia,
         downloadOptions: _downloadOptions);
-    return _response
-        .then((data) => new ExpressionLineageResource.fromJson(data));
+    return _response.then((data) => new LineageResource.fromJson(data));
   }
 
   /**
@@ -438,6 +436,37 @@ class EqdbApi {
         uploadMedia: _uploadMedia,
         downloadOptions: _downloadOptions);
     return _response.then((data) => new ListOfCategoryResource.fromJson(data));
+  }
+
+  /**
+   * Request parameters:
+   *
+   * Completes with a [ListOfDefinitionResource].
+   *
+   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
+   * error.
+   *
+   * If the used [http.Client] completes with an error when making a REST call,
+   * this method will complete with the same error.
+   */
+  async.Future<ListOfDefinitionResource> listDefinition() {
+    var _url = null;
+    var _queryParams = new core.Map();
+    var _uploadMedia = null;
+    var _uploadOptions = null;
+    var _downloadOptions = commons.DownloadOptions.Metadata;
+    var _body = null;
+
+    _url = 'definition/list';
+
+    var _response = _requester.request(_url, "GET",
+        body: _body,
+        queryParams: _queryParams,
+        uploadOptions: _uploadOptions,
+        uploadMedia: _uploadMedia,
+        downloadOptions: _downloadOptions);
+    return _response
+        .then((data) => new ListOfDefinitionResource.fromJson(data));
   }
 
   /**
@@ -904,6 +933,7 @@ class DifferenceBranch {
   core.List<DifferenceBranch> arguments;
   core.bool different;
   core.bool invertRule;
+  core.bool rearrange;
   core.bool resolved;
   RuleResource rule;
 
@@ -920,6 +950,9 @@ class DifferenceBranch {
     }
     if (_json.containsKey("invertRule")) {
       invertRule = _json["invertRule"];
+    }
+    if (_json.containsKey("rearrange")) {
+      rearrange = _json["rearrange"];
     }
     if (_json.containsKey("resolved")) {
       resolved = _json["resolved"];
@@ -939,6 +972,9 @@ class DifferenceBranch {
     }
     if (invertRule != null) {
       _json["invertRule"] = invertRule;
+    }
+    if (rearrange != null) {
+      _json["rearrange"] = rearrange;
     }
     if (resolved != null) {
       _json["resolved"] = resolved;
@@ -979,36 +1015,6 @@ class ExpressionDifferenceResource {
     }
     if (right != null) {
       _json["right"] = (right).toJson();
-    }
-    return _json;
-  }
-}
-
-class ExpressionLineageResource {
-  core.List<LineageExpressionResource> expressions;
-  core.int id;
-
-  ExpressionLineageResource();
-
-  ExpressionLineageResource.fromJson(core.Map _json) {
-    if (_json.containsKey("expressions")) {
-      expressions = _json["expressions"]
-          .map((value) => new LineageExpressionResource.fromJson(value))
-          .toList();
-    }
-    if (_json.containsKey("id")) {
-      id = _json["id"];
-    }
-  }
-
-  core.Map toJson() {
-    var _json = new core.Map();
-    if (expressions != null) {
-      _json["expressions"] =
-          expressions.map((value) => (value).toJson()).toList();
-    }
-    if (id != null) {
-      _json["id"] = id;
     }
     return _json;
   }
@@ -1147,18 +1153,68 @@ class FunctionResource {
   }
 }
 
-class LineageExpressionResource {
+class LineageCreateData {
+  core.List<ExpressionDifferenceResource> steps;
+
+  LineageCreateData();
+
+  LineageCreateData.fromJson(core.Map _json) {
+    if (_json.containsKey("steps")) {
+      steps = _json["steps"]
+          .map((value) => new ExpressionDifferenceResource.fromJson(value))
+          .toList();
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (steps != null) {
+      _json["steps"] = steps.map((value) => (value).toJson()).toList();
+    }
+    return _json;
+  }
+}
+
+class LineageResource {
+  core.List<LineageStepResource> steps;
+
+  LineageResource();
+
+  LineageResource.fromJson(core.Map _json) {
+    if (_json.containsKey("steps")) {
+      steps = _json["steps"]
+          .map((value) => new LineageStepResource.fromJson(value))
+          .toList();
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (steps != null) {
+      _json["steps"] = steps.map((value) => (value).toJson()).toList();
+    }
+    return _json;
+  }
+}
+
+class LineageStepResource {
   CategoryResource category;
   ExpressionResource expression;
   core.int id;
-  ExpressionLineageResource lineage;
+  core.int position;
   RuleResource rule;
-  core.int sequence;
-  core.int substitutionPosition;
+  /**
+   *
+   * Possible string values are:
+   * - "load" : Load new expression.
+   * - "substitute" : Substitute given rule at position.
+   * - "rearrange" : Rearrange child tree at position.
+   */
+  core.String type;
 
-  LineageExpressionResource();
+  LineageStepResource();
 
-  LineageExpressionResource.fromJson(core.Map _json) {
+  LineageStepResource.fromJson(core.Map _json) {
     if (_json.containsKey("category")) {
       category = new CategoryResource.fromJson(_json["category"]);
     }
@@ -1168,17 +1224,14 @@ class LineageExpressionResource {
     if (_json.containsKey("id")) {
       id = _json["id"];
     }
-    if (_json.containsKey("lineage")) {
-      lineage = new ExpressionLineageResource.fromJson(_json["lineage"]);
+    if (_json.containsKey("position")) {
+      position = _json["position"];
     }
     if (_json.containsKey("rule")) {
       rule = new RuleResource.fromJson(_json["rule"]);
     }
-    if (_json.containsKey("sequence")) {
-      sequence = _json["sequence"];
-    }
-    if (_json.containsKey("substitutionPosition")) {
-      substitutionPosition = _json["substitutionPosition"];
+    if (_json.containsKey("type")) {
+      type = _json["type"];
     }
   }
 
@@ -1193,17 +1246,14 @@ class LineageExpressionResource {
     if (id != null) {
       _json["id"] = id;
     }
-    if (lineage != null) {
-      _json["lineage"] = (lineage).toJson();
+    if (position != null) {
+      _json["position"] = position;
     }
     if (rule != null) {
       _json["rule"] = (rule).toJson();
     }
-    if (sequence != null) {
-      _json["sequence"] = sequence;
-    }
-    if (substitutionPosition != null) {
-      _json["substitutionPosition"] = substitutionPosition;
+    if (type != null) {
+      _json["type"] = type;
     }
     return _json;
   }
@@ -1225,6 +1275,33 @@ class ListOfCategoryResource extends collection.ListBase<CategoryResource> {
   CategoryResource operator [](core.int key) => _inner[key];
 
   void operator []=(core.int key, CategoryResource value) {
+    _inner[key] = value;
+  }
+
+  core.int get length => _inner.length;
+
+  void set length(core.int newLength) {
+    _inner.length = newLength;
+  }
+}
+
+class ListOfDefinitionResource extends collection.ListBase<DefinitionResource> {
+  final core.List<DefinitionResource> _inner;
+
+  ListOfDefinitionResource() : _inner = [];
+
+  ListOfDefinitionResource.fromJson(core.List json)
+      : _inner = json
+            .map((value) => new DefinitionResource.fromJson(value))
+            .toList();
+
+  core.List toJson() {
+    return _inner.map((value) => (value).toJson()).toList();
+  }
+
+  DefinitionResource operator [](core.int key) => _inner[key];
+
+  void operator []=(core.int key, DefinitionResource value) {
     _inner[key] = value;
   }
 
