@@ -987,15 +987,15 @@ class DifferenceBranch {
 }
 
 class ExpressionDifferenceResource {
-  DifferenceBranch difference;
+  DifferenceBranch branch;
   ExpressionResource left;
   ExpressionResource right;
 
   ExpressionDifferenceResource();
 
   ExpressionDifferenceResource.fromJson(core.Map _json) {
-    if (_json.containsKey("difference")) {
-      difference = new DifferenceBranch.fromJson(_json["difference"]);
+    if (_json.containsKey("branch")) {
+      branch = new DifferenceBranch.fromJson(_json["branch"]);
     }
     if (_json.containsKey("left")) {
       left = new ExpressionResource.fromJson(_json["left"]);
@@ -1007,8 +1007,8 @@ class ExpressionDifferenceResource {
 
   core.Map toJson() {
     var _json = new core.Map();
-    if (difference != null) {
-      _json["difference"] = (difference).toJson();
+    if (branch != null) {
+      _json["branch"] = (branch).toJson();
     }
     if (left != null) {
       _json["left"] = (left).toJson();
@@ -1202,6 +1202,7 @@ class LineageStepResource {
   ExpressionResource expression;
   core.int id;
   core.int position;
+  core.String rearrange;
   RuleResource rule;
   /**
    *
@@ -1227,6 +1228,9 @@ class LineageStepResource {
     if (_json.containsKey("position")) {
       position = _json["position"];
     }
+    if (_json.containsKey("rearrange")) {
+      rearrange = _json["rearrange"];
+    }
     if (_json.containsKey("rule")) {
       rule = new RuleResource.fromJson(_json["rule"]);
     }
@@ -1248,6 +1252,9 @@ class LineageStepResource {
     }
     if (position != null) {
       _json["position"] = position;
+    }
+    if (rearrange != null) {
+      _json["rearrange"] = rearrange;
     }
     if (rule != null) {
       _json["rule"] = (rule).toJson();
