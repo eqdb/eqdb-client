@@ -933,7 +933,8 @@ class DifferenceBranch {
   core.List<DifferenceBranch> arguments;
   core.bool different;
   core.bool invertRule;
-  core.bool rearrange;
+  core.int position;
+  core.List<Rearrangement> rearrangements;
   core.bool resolved;
   RuleResource rule;
 
@@ -951,8 +952,13 @@ class DifferenceBranch {
     if (_json.containsKey("invertRule")) {
       invertRule = _json["invertRule"];
     }
-    if (_json.containsKey("rearrange")) {
-      rearrange = _json["rearrange"];
+    if (_json.containsKey("position")) {
+      position = _json["position"];
+    }
+    if (_json.containsKey("rearrangements")) {
+      rearrangements = _json["rearrangements"]
+          .map((value) => new Rearrangement.fromJson(value))
+          .toList();
     }
     if (_json.containsKey("resolved")) {
       resolved = _json["resolved"];
@@ -973,8 +979,12 @@ class DifferenceBranch {
     if (invertRule != null) {
       _json["invertRule"] = invertRule;
     }
-    if (rearrange != null) {
-      _json["rearrange"] = rearrange;
+    if (position != null) {
+      _json["position"] = position;
+    }
+    if (rearrangements != null) {
+      _json["rearrangements"] =
+          rearrangements.map((value) => (value).toJson()).toList();
     }
     if (resolved != null) {
       _json["resolved"] = resolved;
@@ -1176,11 +1186,15 @@ class LineageCreateData {
 }
 
 class LineageResource {
+  core.int id;
   core.List<LineageStepResource> steps;
 
   LineageResource();
 
   LineageResource.fromJson(core.Map _json) {
+    if (_json.containsKey("id")) {
+      id = _json["id"];
+    }
     if (_json.containsKey("steps")) {
       steps = _json["steps"]
           .map((value) => new LineageStepResource.fromJson(value))
@@ -1190,6 +1204,9 @@ class LineageResource {
 
   core.Map toJson() {
     var _json = new core.Map();
+    if (id != null) {
+      _json["id"] = id;
+    }
     if (steps != null) {
       _json["steps"] = steps.map((value) => (value).toJson()).toList();
     }
@@ -1201,8 +1218,9 @@ class LineageStepResource {
   CategoryResource category;
   ExpressionResource expression;
   core.int id;
+  core.bool invertRule;
   core.int position;
-  core.String rearrange;
+  core.List<core.int> rearrange;
   RuleResource rule;
   /**
    *
@@ -1224,6 +1242,9 @@ class LineageStepResource {
     }
     if (_json.containsKey("id")) {
       id = _json["id"];
+    }
+    if (_json.containsKey("invertRule")) {
+      invertRule = _json["invertRule"];
     }
     if (_json.containsKey("position")) {
       position = _json["position"];
@@ -1249,6 +1270,9 @@ class LineageStepResource {
     }
     if (id != null) {
       _json["id"] = id;
+    }
+    if (invertRule != null) {
+      _json["invertRule"] = invertRule;
     }
     if (position != null) {
       _json["position"] = position;
@@ -1575,6 +1599,33 @@ class OperatorResource {
     }
     if (precedenceLevel != null) {
       _json["precedenceLevel"] = precedenceLevel;
+    }
+    return _json;
+  }
+}
+
+class Rearrangement {
+  core.List<core.int> format;
+  core.int position;
+
+  Rearrangement();
+
+  Rearrangement.fromJson(core.Map _json) {
+    if (_json.containsKey("format")) {
+      format = _json["format"];
+    }
+    if (_json.containsKey("position")) {
+      position = _json["position"];
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (format != null) {
+      _json["format"] = format;
+    }
+    if (position != null) {
+      _json["position"] = position;
     }
     return _json;
   }
