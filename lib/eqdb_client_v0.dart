@@ -804,7 +804,7 @@ class EqdbApi {
    *
    * Request parameters:
    *
-   * Completes with a [ExpressionDifferenceResource].
+   * Completes with a [DifferenceBranch].
    *
    * Completes with a [commons.ApiRequestError] if the API endpoint returned an
    * error.
@@ -812,8 +812,8 @@ class EqdbApi {
    * If the used [http.Client] completes with an error when making a REST call,
    * this method will complete with the same error.
    */
-  async.Future<ExpressionDifferenceResource> resolveExpressionDifference(
-      ExpressionDifferenceResource request) {
+  async.Future<DifferenceBranch> resolveExpressionDifference(
+      DifferenceBranch request) {
     var _url = null;
     var _queryParams = new core.Map();
     var _uploadMedia = null;
@@ -833,8 +833,7 @@ class EqdbApi {
         uploadOptions: _uploadOptions,
         uploadMedia: _uploadMedia,
         downloadOptions: _downloadOptions);
-    return _response
-        .then((data) => new ExpressionDifferenceResource.fromJson(data));
+    return _response.then((data) => new DifferenceBranch.fromJson(data));
   }
 }
 
@@ -932,10 +931,13 @@ class DescriptorResource {
 class DifferenceBranch {
   core.List<DifferenceBranch> arguments;
   core.bool different;
-  core.bool invertRule;
+  core.String leftData;
   core.int position;
   core.List<Rearrangement> rearrangements;
   core.bool resolved;
+  core.bool reverseEvaluate;
+  core.bool reverseRule;
+  core.String rightData;
   RuleResource rule;
 
   DifferenceBranch();
@@ -949,8 +951,8 @@ class DifferenceBranch {
     if (_json.containsKey("different")) {
       different = _json["different"];
     }
-    if (_json.containsKey("invertRule")) {
-      invertRule = _json["invertRule"];
+    if (_json.containsKey("leftData")) {
+      leftData = _json["leftData"];
     }
     if (_json.containsKey("position")) {
       position = _json["position"];
@@ -962,6 +964,15 @@ class DifferenceBranch {
     }
     if (_json.containsKey("resolved")) {
       resolved = _json["resolved"];
+    }
+    if (_json.containsKey("reverseEvaluate")) {
+      reverseEvaluate = _json["reverseEvaluate"];
+    }
+    if (_json.containsKey("reverseRule")) {
+      reverseRule = _json["reverseRule"];
+    }
+    if (_json.containsKey("rightData")) {
+      rightData = _json["rightData"];
     }
     if (_json.containsKey("rule")) {
       rule = new RuleResource.fromJson(_json["rule"]);
@@ -976,8 +987,8 @@ class DifferenceBranch {
     if (different != null) {
       _json["different"] = different;
     }
-    if (invertRule != null) {
-      _json["invertRule"] = invertRule;
+    if (leftData != null) {
+      _json["leftData"] = leftData;
     }
     if (position != null) {
       _json["position"] = position;
@@ -989,42 +1000,17 @@ class DifferenceBranch {
     if (resolved != null) {
       _json["resolved"] = resolved;
     }
+    if (reverseEvaluate != null) {
+      _json["reverseEvaluate"] = reverseEvaluate;
+    }
+    if (reverseRule != null) {
+      _json["reverseRule"] = reverseRule;
+    }
+    if (rightData != null) {
+      _json["rightData"] = rightData;
+    }
     if (rule != null) {
       _json["rule"] = (rule).toJson();
-    }
-    return _json;
-  }
-}
-
-class ExpressionDifferenceResource {
-  DifferenceBranch branch;
-  ExpressionResource left;
-  ExpressionResource right;
-
-  ExpressionDifferenceResource();
-
-  ExpressionDifferenceResource.fromJson(core.Map _json) {
-    if (_json.containsKey("branch")) {
-      branch = new DifferenceBranch.fromJson(_json["branch"]);
-    }
-    if (_json.containsKey("left")) {
-      left = new ExpressionResource.fromJson(_json["left"]);
-    }
-    if (_json.containsKey("right")) {
-      right = new ExpressionResource.fromJson(_json["right"]);
-    }
-  }
-
-  core.Map toJson() {
-    var _json = new core.Map();
-    if (branch != null) {
-      _json["branch"] = (branch).toJson();
-    }
-    if (left != null) {
-      _json["left"] = (left).toJson();
-    }
-    if (right != null) {
-      _json["right"] = (right).toJson();
     }
     return _json;
   }
@@ -1164,14 +1150,14 @@ class FunctionResource {
 }
 
 class LineageCreateData {
-  core.List<ExpressionDifferenceResource> steps;
+  core.List<DifferenceBranch> steps;
 
   LineageCreateData();
 
   LineageCreateData.fromJson(core.Map _json) {
     if (_json.containsKey("steps")) {
       steps = _json["steps"]
-          .map((value) => new ExpressionDifferenceResource.fromJson(value))
+          .map((value) => new DifferenceBranch.fromJson(value))
           .toList();
     }
   }
@@ -1218,15 +1204,17 @@ class LineageStepResource {
   CategoryResource category;
   ExpressionResource expression;
   core.int id;
-  core.bool invertRule;
   core.int position;
   core.List<core.int> rearrange;
   RuleResource rule;
   /**
    *
    * Possible string values are:
-   * - "load" : Load new expression.
-   * - "substitute" : Substitute given rule at position.
+   * - "set" : Set new expression.
+   * - "rule_normal" : substitute a -> b, evaluate b from a
+   * - "rule_invert" : substitute b -> a, evaluate a from b (invert rule sides)
+   * - "rule_mirror" : substitute a -> b, evaluate a from b (mirror evaluation)
+   * - "rule_revert" : substitute b -> a, evaluate b from a (invert and mirror)
    * - "rearrange" : Rearrange child tree at position.
    */
   core.String type;
@@ -1242,9 +1230,6 @@ class LineageStepResource {
     }
     if (_json.containsKey("id")) {
       id = _json["id"];
-    }
-    if (_json.containsKey("invertRule")) {
-      invertRule = _json["invertRule"];
     }
     if (_json.containsKey("position")) {
       position = _json["position"];
@@ -1270,9 +1255,6 @@ class LineageStepResource {
     }
     if (id != null) {
       _json["id"] = id;
-    }
-    if (invertRule != null) {
-      _json["invertRule"] = invertRule;
     }
     if (position != null) {
       _json["position"] = position;
