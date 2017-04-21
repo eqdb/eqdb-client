@@ -30,42 +30,6 @@ class EqdbApi {
    *
    * Request parameters:
    *
-   * Completes with a [CategoryResource].
-   *
-   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
-   * error.
-   *
-   * If the used [http.Client] completes with an error when making a REST call,
-   * this method will complete with the same error.
-   */
-  async.Future<CategoryResource> createCategory(CategoryResource request) {
-    var _url = null;
-    var _queryParams = new core.Map();
-    var _uploadMedia = null;
-    var _uploadOptions = null;
-    var _downloadOptions = commons.DownloadOptions.Metadata;
-    var _body = null;
-
-    if (request != null) {
-      _body = convert.JSON.encode((request).toJson());
-    }
-
-    _url = 'category/create';
-
-    var _response = _requester.request(_url, "POST",
-        body: _body,
-        queryParams: _queryParams,
-        uploadOptions: _uploadOptions,
-        uploadMedia: _uploadMedia,
-        downloadOptions: _downloadOptions);
-    return _response.then((data) => new CategoryResource.fromJson(data));
-  }
-
-  /**
-   * [request] - The metadata request object.
-   *
-   * Request parameters:
-   *
    * Completes with a [DefinitionResource].
    *
    * Completes with a [commons.ApiRequestError] if the API endpoint returned an
@@ -96,43 +60,6 @@ class EqdbApi {
         uploadMedia: _uploadMedia,
         downloadOptions: _downloadOptions);
     return _response.then((data) => new DefinitionResource.fromJson(data));
-  }
-
-  /**
-   * [request] - The metadata request object.
-   *
-   * Request parameters:
-   *
-   * Completes with a [DescriptorResource].
-   *
-   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
-   * error.
-   *
-   * If the used [http.Client] completes with an error when making a REST call,
-   * this method will complete with the same error.
-   */
-  async.Future<DescriptorResource> createDescriptor(
-      DescriptorResource request) {
-    var _url = null;
-    var _queryParams = new core.Map();
-    var _uploadMedia = null;
-    var _uploadOptions = null;
-    var _downloadOptions = commons.DownloadOptions.Metadata;
-    var _body = null;
-
-    if (request != null) {
-      _body = convert.JSON.encode((request).toJson());
-    }
-
-    _url = 'descriptor/create';
-
-    var _response = _requester.request(_url, "POST",
-        body: _body,
-        queryParams: _queryParams,
-        uploadOptions: _uploadOptions,
-        uploadMedia: _uploadMedia,
-        downloadOptions: _downloadOptions);
-    return _response.then((data) => new DescriptorResource.fromJson(data));
   }
 
   /**
@@ -176,7 +103,7 @@ class EqdbApi {
    *
    * Request parameters:
    *
-   * Completes with a [LineageResource].
+   * Completes with a [LanguageResource].
    *
    * Completes with a [commons.ApiRequestError] if the API endpoint returned an
    * error.
@@ -184,7 +111,7 @@ class EqdbApi {
    * If the used [http.Client] completes with an error when making a REST call,
    * this method will complete with the same error.
    */
-  async.Future<LineageResource> createLineage(LineageCreateData request) {
+  async.Future<LanguageResource> createLanguage(LanguageResource request) {
     var _url = null;
     var _queryParams = new core.Map();
     var _uploadMedia = null;
@@ -196,7 +123,7 @@ class EqdbApi {
       _body = convert.JSON.encode((request).toJson());
     }
 
-    _url = 'lineage/create';
+    _url = 'language/create';
 
     var _response = _requester.request(_url, "POST",
         body: _body,
@@ -204,43 +131,7 @@ class EqdbApi {
         uploadOptions: _uploadOptions,
         uploadMedia: _uploadMedia,
         downloadOptions: _downloadOptions);
-    return _response.then((data) => new LineageResource.fromJson(data));
-  }
-
-  /**
-   * [request] - The metadata request object.
-   *
-   * Request parameters:
-   *
-   * Completes with a [LocaleResource].
-   *
-   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
-   * error.
-   *
-   * If the used [http.Client] completes with an error when making a REST call,
-   * this method will complete with the same error.
-   */
-  async.Future<LocaleResource> createLocale(LocaleResource request) {
-    var _url = null;
-    var _queryParams = new core.Map();
-    var _uploadMedia = null;
-    var _uploadOptions = null;
-    var _downloadOptions = commons.DownloadOptions.Metadata;
-    var _body = null;
-
-    if (request != null) {
-      _body = convert.JSON.encode((request).toJson());
-    }
-
-    _url = 'locale/create';
-
-    var _response = _requester.request(_url, "POST",
-        body: _body,
-        queryParams: _queryParams,
-        uploadOptions: _uploadOptions,
-        uploadMedia: _uploadMedia,
-        downloadOptions: _downloadOptions);
-    return _response.then((data) => new LocaleResource.fromJson(data));
+    return _response.then((data) => new LanguageResource.fromJson(data));
   }
 
   /**
@@ -284,9 +175,7 @@ class EqdbApi {
    *
    * Request parameters:
    *
-   * [id] - Path parameter: 'id'.
-   *
-   * Completes with a [CategoryResource].
+   * Completes with a [ProofResource].
    *
    * Completes with a [commons.ApiRequestError] if the API endpoint returned an
    * error.
@@ -294,8 +183,7 @@ class EqdbApi {
    * If the used [http.Client] completes with an error when making a REST call,
    * this method will complete with the same error.
    */
-  async.Future<CategoryResource> createSubCategory(
-      CategoryResource request, core.int id) {
+  async.Future<ProofResource> createProof(ProofData request) {
     var _url = null;
     var _queryParams = new core.Map();
     var _uploadMedia = null;
@@ -306,12 +194,8 @@ class EqdbApi {
     if (request != null) {
       _body = convert.JSON.encode((request).toJson());
     }
-    if (id == null) {
-      throw new core.ArgumentError("Parameter id is required.");
-    }
 
-    _url =
-        'category/' + commons.Escaper.ecapeVariable('$id') + '/category/create';
+    _url = 'proof/create';
 
     var _response = _requester.request(_url, "POST",
         body: _body,
@@ -319,7 +203,7 @@ class EqdbApi {
         uploadOptions: _uploadOptions,
         uploadMedia: _uploadMedia,
         downloadOptions: _downloadOptions);
-    return _response.then((data) => new CategoryResource.fromJson(data));
+    return _response.then((data) => new ProofResource.fromJson(data));
   }
 
   /**
@@ -405,41 +289,7 @@ class EqdbApi {
   /**
    * Request parameters:
    *
-   * [locale] - Query parameter: 'locale'.
-   *
-   * Completes with a [ListOfCategoryResource].
-   *
-   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
-   * error.
-   *
-   * If the used [http.Client] completes with an error when making a REST call,
-   * this method will complete with the same error.
-   */
-  async.Future<ListOfCategoryResource> listCategories({core.String locale}) {
-    var _url = null;
-    var _queryParams = new core.Map();
-    var _uploadMedia = null;
-    var _uploadOptions = null;
-    var _downloadOptions = commons.DownloadOptions.Metadata;
-    var _body = null;
-
-    if (locale != null) {
-      _queryParams["locale"] = [locale];
-    }
-
-    _url = 'category/list';
-
-    var _response = _requester.request(_url, "GET",
-        body: _body,
-        queryParams: _queryParams,
-        uploadOptions: _uploadOptions,
-        uploadMedia: _uploadMedia,
-        downloadOptions: _downloadOptions);
-    return _response.then((data) => new ListOfCategoryResource.fromJson(data));
-  }
-
-  /**
-   * Request parameters:
+   * [language] - Query parameter: 'language'.
    *
    * Completes with a [ListOfDefinitionResource].
    *
@@ -449,13 +299,18 @@ class EqdbApi {
    * If the used [http.Client] completes with an error when making a REST call,
    * this method will complete with the same error.
    */
-  async.Future<ListOfDefinitionResource> listDefinition() {
+  async.Future<ListOfDefinitionResource> listDefinition(
+      {core.String language}) {
     var _url = null;
     var _queryParams = new core.Map();
     var _uploadMedia = null;
     var _uploadOptions = null;
     var _downloadOptions = commons.DownloadOptions.Metadata;
     var _body = null;
+
+    if (language != null) {
+      _queryParams["language"] = [language];
+    }
 
     _url = 'definition/list';
 
@@ -512,7 +367,7 @@ class EqdbApi {
   /**
    * Request parameters:
    *
-   * [locale] - Query parameter: 'locale'.
+   * [language] - Query parameter: 'language'.
    *
    * Completes with a [ListOfDescriptorResource].
    *
@@ -522,7 +377,8 @@ class EqdbApi {
    * If the used [http.Client] completes with an error when making a REST call,
    * this method will complete with the same error.
    */
-  async.Future<ListOfDescriptorResource> listDescriptors({core.String locale}) {
+  async.Future<ListOfDescriptorResource> listDescriptors(
+      {core.String language}) {
     var _url = null;
     var _queryParams = new core.Map();
     var _uploadMedia = null;
@@ -530,8 +386,8 @@ class EqdbApi {
     var _downloadOptions = commons.DownloadOptions.Metadata;
     var _body = null;
 
-    if (locale != null) {
-      _queryParams["locale"] = [locale];
+    if (language != null) {
+      _queryParams["language"] = [language];
     }
 
     _url = 'descriptor/list';
@@ -549,7 +405,7 @@ class EqdbApi {
   /**
    * Request parameters:
    *
-   * [locale] - Query parameter: 'locale'.
+   * [language] - Query parameter: 'language'.
    *
    * Completes with a [ListOfFunctionResource].
    *
@@ -559,7 +415,7 @@ class EqdbApi {
    * If the used [http.Client] completes with an error when making a REST call,
    * this method will complete with the same error.
    */
-  async.Future<ListOfFunctionResource> listFunctions({core.String locale}) {
+  async.Future<ListOfFunctionResource> listFunctions({core.String language}) {
     var _url = null;
     var _queryParams = new core.Map();
     var _uploadMedia = null;
@@ -567,8 +423,8 @@ class EqdbApi {
     var _downloadOptions = commons.DownloadOptions.Metadata;
     var _body = null;
 
-    if (locale != null) {
-      _queryParams["locale"] = [locale];
+    if (language != null) {
+      _queryParams["language"] = [language];
     }
 
     _url = 'function/list';
@@ -585,7 +441,7 @@ class EqdbApi {
   /**
    * Request parameters:
    *
-   * Completes with a [ListOfLocaleResource].
+   * Completes with a [ListOfLanguageResource].
    *
    * Completes with a [commons.ApiRequestError] if the API endpoint returned an
    * error.
@@ -593,7 +449,7 @@ class EqdbApi {
    * If the used [http.Client] completes with an error when making a REST call,
    * this method will complete with the same error.
    */
-  async.Future<ListOfLocaleResource> listLocales() {
+  async.Future<ListOfLanguageResource> listLanguages() {
     var _url = null;
     var _queryParams = new core.Map();
     var _uploadMedia = null;
@@ -601,7 +457,7 @@ class EqdbApi {
     var _downloadOptions = commons.DownloadOptions.Metadata;
     var _body = null;
 
-    _url = 'locale/list';
+    _url = 'language/list';
 
     var _response = _requester.request(_url, "GET",
         body: _body,
@@ -609,7 +465,7 @@ class EqdbApi {
         uploadOptions: _uploadOptions,
         uploadMedia: _uploadMedia,
         downloadOptions: _downloadOptions);
-    return _response.then((data) => new ListOfLocaleResource.fromJson(data));
+    return _response.then((data) => new ListOfLanguageResource.fromJson(data));
   }
 
   /**
@@ -645,11 +501,9 @@ class EqdbApi {
   /**
    * Request parameters:
    *
-   * [id] - Path parameter: 'id'.
+   * [language] - Query parameter: 'language'.
    *
-   * [locale] - Query parameter: 'locale'.
-   *
-   * Completes with a [ListOfCategoryResource].
+   * Completes with a [ListOfProofResource].
    *
    * Completes with a [commons.ApiRequestError] if the API endpoint returned an
    * error.
@@ -657,8 +511,7 @@ class EqdbApi {
    * If the used [http.Client] completes with an error when making a REST call,
    * this method will complete with the same error.
    */
-  async.Future<ListOfCategoryResource> listSubCategories(core.int id,
-      {core.String locale}) {
+  async.Future<ListOfProofResource> listProofs({core.String language}) {
     var _url = null;
     var _queryParams = new core.Map();
     var _uploadMedia = null;
@@ -666,15 +519,11 @@ class EqdbApi {
     var _downloadOptions = commons.DownloadOptions.Metadata;
     var _body = null;
 
-    if (id == null) {
-      throw new core.ArgumentError("Parameter id is required.");
-    }
-    if (locale != null) {
-      _queryParams["locale"] = [locale];
+    if (language != null) {
+      _queryParams["language"] = [language];
     }
 
-    _url =
-        'category/' + commons.Escaper.ecapeVariable('$id') + '/category/list';
+    _url = 'proof/list';
 
     var _response = _requester.request(_url, "GET",
         body: _body,
@@ -682,13 +531,13 @@ class EqdbApi {
         uploadOptions: _uploadOptions,
         uploadMedia: _uploadMedia,
         downloadOptions: _downloadOptions);
-    return _response.then((data) => new ListOfCategoryResource.fromJson(data));
+    return _response.then((data) => new ListOfProofResource.fromJson(data));
   }
 
   /**
    * Request parameters:
    *
-   * [locale] - Query parameter: 'locale'.
+   * [language] - Query parameter: 'language'.
    *
    * Completes with a [ListOfSubjectResource].
    *
@@ -698,7 +547,7 @@ class EqdbApi {
    * If the used [http.Client] completes with an error when making a REST call,
    * this method will complete with the same error.
    */
-  async.Future<ListOfSubjectResource> listSubjects({core.String locale}) {
+  async.Future<ListOfSubjectResource> listSubjects({core.String language}) {
     var _url = null;
     var _queryParams = new core.Map();
     var _uploadMedia = null;
@@ -706,8 +555,8 @@ class EqdbApi {
     var _downloadOptions = commons.DownloadOptions.Metadata;
     var _body = null;
 
-    if (locale != null) {
-      _queryParams["locale"] = [locale];
+    if (language != null) {
+      _queryParams["language"] = [language];
     }
 
     _url = 'subject/list';
@@ -719,48 +568,6 @@ class EqdbApi {
         uploadMedia: _uploadMedia,
         downloadOptions: _downloadOptions);
     return _response.then((data) => new ListOfSubjectResource.fromJson(data));
-  }
-
-  /**
-   * Request parameters:
-   *
-   * [id] - Path parameter: 'id'.
-   *
-   * [locale] - Query parameter: 'locale'.
-   *
-   * Completes with a [CategoryResource].
-   *
-   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
-   * error.
-   *
-   * If the used [http.Client] completes with an error when making a REST call,
-   * this method will complete with the same error.
-   */
-  async.Future<CategoryResource> readCategory(core.int id,
-      {core.String locale}) {
-    var _url = null;
-    var _queryParams = new core.Map();
-    var _uploadMedia = null;
-    var _uploadOptions = null;
-    var _downloadOptions = commons.DownloadOptions.Metadata;
-    var _body = null;
-
-    if (id == null) {
-      throw new core.ArgumentError("Parameter id is required.");
-    }
-    if (locale != null) {
-      _queryParams["locale"] = [locale];
-    }
-
-    _url = 'category/' + commons.Escaper.ecapeVariable('$id') + '/read';
-
-    var _response = _requester.request(_url, "GET",
-        body: _body,
-        queryParams: _queryParams,
-        uploadOptions: _uploadOptions,
-        uploadMedia: _uploadMedia,
-        downloadOptions: _downloadOptions);
-    return _response.then((data) => new CategoryResource.fromJson(data));
   }
 
   /**
@@ -800,6 +607,42 @@ class EqdbApi {
   }
 
   /**
+   * Request parameters:
+   *
+   * [id] - Path parameter: 'id'.
+   *
+   * Completes with a [ProofResource].
+   *
+   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
+   * error.
+   *
+   * If the used [http.Client] completes with an error when making a REST call,
+   * this method will complete with the same error.
+   */
+  async.Future<ProofResource> readProof(core.int id) {
+    var _url = null;
+    var _queryParams = new core.Map();
+    var _uploadMedia = null;
+    var _uploadOptions = null;
+    var _downloadOptions = commons.DownloadOptions.Metadata;
+    var _body = null;
+
+    if (id == null) {
+      throw new core.ArgumentError("Parameter id is required.");
+    }
+
+    _url = 'proof/' + commons.Escaper.ecapeVariable('$id') + '/read';
+
+    var _response = _requester.request(_url, "GET",
+        body: _body,
+        queryParams: _queryParams,
+        uploadOptions: _uploadOptions,
+        uploadMedia: _uploadMedia,
+        downloadOptions: _downloadOptions);
+    return _response.then((data) => new ProofResource.fromJson(data));
+  }
+
+  /**
    * [request] - The metadata request object.
    *
    * Request parameters:
@@ -825,7 +668,7 @@ class EqdbApi {
       _body = convert.JSON.encode((request).toJson());
     }
 
-    _url = 'expressionDifference/resolve';
+    _url = 'difference/resolve';
 
     var _response = _requester.request(_url, "POST",
         body: _body,
@@ -834,40 +677,6 @@ class EqdbApi {
         uploadMedia: _uploadMedia,
         downloadOptions: _downloadOptions);
     return _response.then((data) => new DifferenceBranch.fromJson(data));
-  }
-}
-
-class CategoryResource {
-  core.int id;
-  core.List<core.int> parents;
-  SubjectResource subject;
-
-  CategoryResource();
-
-  CategoryResource.fromJson(core.Map _json) {
-    if (_json.containsKey("id")) {
-      id = _json["id"];
-    }
-    if (_json.containsKey("parents")) {
-      parents = _json["parents"];
-    }
-    if (_json.containsKey("subject")) {
-      subject = new SubjectResource.fromJson(_json["subject"]);
-    }
-  }
-
-  core.Map toJson() {
-    var _json = new core.Map();
-    if (id != null) {
-      _json["id"] = id;
-    }
-    if (parents != null) {
-      _json["parents"] = parents;
-    }
-    if (subject != null) {
-      _json["subject"] = (subject).toJson();
-    }
-    return _json;
   }
 }
 
@@ -1066,7 +875,6 @@ class ExpressionResource {
 
 class FunctionResource {
   core.int argumentCount;
-  CategoryResource category;
   DescriptorResource descriptor;
   core.bool generic;
   core.int id;
@@ -1083,15 +891,13 @@ class FunctionResource {
   core.String keywordType;
   core.String latexTemplate;
   core.bool rearrangeable;
+  SubjectResource subject;
 
   FunctionResource();
 
   FunctionResource.fromJson(core.Map _json) {
     if (_json.containsKey("argumentCount")) {
       argumentCount = _json["argumentCount"];
-    }
-    if (_json.containsKey("category")) {
-      category = new CategoryResource.fromJson(_json["category"]);
     }
     if (_json.containsKey("descriptor")) {
       descriptor = new DescriptorResource.fromJson(_json["descriptor"]);
@@ -1114,15 +920,15 @@ class FunctionResource {
     if (_json.containsKey("rearrangeable")) {
       rearrangeable = _json["rearrangeable"];
     }
+    if (_json.containsKey("subject")) {
+      subject = new SubjectResource.fromJson(_json["subject"]);
+    }
   }
 
   core.Map toJson() {
     var _json = new core.Map();
     if (argumentCount != null) {
       _json["argumentCount"] = argumentCount;
-    }
-    if (category != null) {
-      _json["category"] = (category).toJson();
     }
     if (descriptor != null) {
       _json["descriptor"] = (descriptor).toJson();
@@ -1145,156 +951,37 @@ class FunctionResource {
     if (rearrangeable != null) {
       _json["rearrangeable"] = rearrangeable;
     }
-    return _json;
-  }
-}
-
-class LineageCreateData {
-  core.List<DifferenceBranch> steps;
-
-  LineageCreateData();
-
-  LineageCreateData.fromJson(core.Map _json) {
-    if (_json.containsKey("steps")) {
-      steps = _json["steps"]
-          .map((value) => new DifferenceBranch.fromJson(value))
-          .toList();
-    }
-  }
-
-  core.Map toJson() {
-    var _json = new core.Map();
-    if (steps != null) {
-      _json["steps"] = steps.map((value) => (value).toJson()).toList();
+    if (subject != null) {
+      _json["subject"] = (subject).toJson();
     }
     return _json;
   }
 }
 
-class LineageResource {
+class LanguageResource {
+  core.String code;
   core.int id;
-  core.List<LineageStepResource> steps;
 
-  LineageResource();
+  LanguageResource();
 
-  LineageResource.fromJson(core.Map _json) {
-    if (_json.containsKey("id")) {
-      id = _json["id"];
-    }
-    if (_json.containsKey("steps")) {
-      steps = _json["steps"]
-          .map((value) => new LineageStepResource.fromJson(value))
-          .toList();
-    }
-  }
-
-  core.Map toJson() {
-    var _json = new core.Map();
-    if (id != null) {
-      _json["id"] = id;
-    }
-    if (steps != null) {
-      _json["steps"] = steps.map((value) => (value).toJson()).toList();
-    }
-    return _json;
-  }
-}
-
-class LineageStepResource {
-  CategoryResource category;
-  ExpressionResource expression;
-  core.int id;
-  core.int position;
-  core.List<core.int> rearrange;
-  RuleResource rule;
-  /**
-   *
-   * Possible string values are:
-   * - "set" : Set new expression.
-   * - "rule_normal" : substitute a -> b, evaluate b from a
-   * - "rule_invert" : substitute b -> a, evaluate a from b (invert rule sides)
-   * - "rule_mirror" : substitute a -> b, evaluate a from b (mirror evaluation)
-   * - "rule_revert" : substitute b -> a, evaluate b from a (invert and mirror)
-   * - "rearrange" : Rearrange child tree at position.
-   */
-  core.String type;
-
-  LineageStepResource();
-
-  LineageStepResource.fromJson(core.Map _json) {
-    if (_json.containsKey("category")) {
-      category = new CategoryResource.fromJson(_json["category"]);
-    }
-    if (_json.containsKey("expression")) {
-      expression = new ExpressionResource.fromJson(_json["expression"]);
+  LanguageResource.fromJson(core.Map _json) {
+    if (_json.containsKey("code")) {
+      code = _json["code"];
     }
     if (_json.containsKey("id")) {
       id = _json["id"];
     }
-    if (_json.containsKey("position")) {
-      position = _json["position"];
-    }
-    if (_json.containsKey("rearrange")) {
-      rearrange = _json["rearrange"];
-    }
-    if (_json.containsKey("rule")) {
-      rule = new RuleResource.fromJson(_json["rule"]);
-    }
-    if (_json.containsKey("type")) {
-      type = _json["type"];
-    }
   }
 
   core.Map toJson() {
     var _json = new core.Map();
-    if (category != null) {
-      _json["category"] = (category).toJson();
-    }
-    if (expression != null) {
-      _json["expression"] = (expression).toJson();
+    if (code != null) {
+      _json["code"] = code;
     }
     if (id != null) {
       _json["id"] = id;
     }
-    if (position != null) {
-      _json["position"] = position;
-    }
-    if (rearrange != null) {
-      _json["rearrange"] = rearrange;
-    }
-    if (rule != null) {
-      _json["rule"] = (rule).toJson();
-    }
-    if (type != null) {
-      _json["type"] = type;
-    }
     return _json;
-  }
-}
-
-class ListOfCategoryResource extends collection.ListBase<CategoryResource> {
-  final core.List<CategoryResource> _inner;
-
-  ListOfCategoryResource() : _inner = [];
-
-  ListOfCategoryResource.fromJson(core.List json)
-      : _inner =
-            json.map((value) => new CategoryResource.fromJson(value)).toList();
-
-  core.List toJson() {
-    return _inner.map((value) => (value).toJson()).toList();
-  }
-
-  CategoryResource operator [](core.int key) => _inner[key];
-
-  void operator []=(core.int key, CategoryResource value) {
-    _inner[key] = value;
-  }
-
-  core.int get length => _inner.length;
-
-  void set length(core.int newLength) {
-    _inner.length = newLength;
   }
 }
 
@@ -1378,22 +1065,22 @@ class ListOfFunctionResource extends collection.ListBase<FunctionResource> {
   }
 }
 
-class ListOfLocaleResource extends collection.ListBase<LocaleResource> {
-  final core.List<LocaleResource> _inner;
+class ListOfLanguageResource extends collection.ListBase<LanguageResource> {
+  final core.List<LanguageResource> _inner;
 
-  ListOfLocaleResource() : _inner = [];
+  ListOfLanguageResource() : _inner = [];
 
-  ListOfLocaleResource.fromJson(core.List json)
+  ListOfLanguageResource.fromJson(core.List json)
       : _inner =
-            json.map((value) => new LocaleResource.fromJson(value)).toList();
+            json.map((value) => new LanguageResource.fromJson(value)).toList();
 
   core.List toJson() {
     return _inner.map((value) => (value).toJson()).toList();
   }
 
-  LocaleResource operator [](core.int key) => _inner[key];
+  LanguageResource operator [](core.int key) => _inner[key];
 
-  void operator []=(core.int key, LocaleResource value) {
+  void operator []=(core.int key, LanguageResource value) {
     _inner[key] = value;
   }
 
@@ -1420,6 +1107,32 @@ class ListOfOperatorResource extends collection.ListBase<OperatorResource> {
   OperatorResource operator [](core.int key) => _inner[key];
 
   void operator []=(core.int key, OperatorResource value) {
+    _inner[key] = value;
+  }
+
+  core.int get length => _inner.length;
+
+  void set length(core.int newLength) {
+    _inner.length = newLength;
+  }
+}
+
+class ListOfProofResource extends collection.ListBase<ProofResource> {
+  final core.List<ProofResource> _inner;
+
+  ListOfProofResource() : _inner = [];
+
+  ListOfProofResource.fromJson(core.List json)
+      : _inner =
+            json.map((value) => new ProofResource.fromJson(value)).toList();
+
+  core.List toJson() {
+    return _inner.map((value) => (value).toJson()).toList();
+  }
+
+  ProofResource operator [](core.int key) => _inner[key];
+
+  void operator []=(core.int key, ProofResource value) {
     _inner[key] = value;
   }
 
@@ -1481,33 +1194,6 @@ class ListOfTranslationResource
 
   void set length(core.int newLength) {
     _inner.length = newLength;
-  }
-}
-
-class LocaleResource {
-  core.String code;
-  core.int id;
-
-  LocaleResource();
-
-  LocaleResource.fromJson(core.Map _json) {
-    if (_json.containsKey("code")) {
-      code = _json["code"];
-    }
-    if (_json.containsKey("id")) {
-      id = _json["id"];
-    }
-  }
-
-  core.Map toJson() {
-    var _json = new core.Map();
-    if (code != null) {
-      _json["code"] = code;
-    }
-    if (id != null) {
-      _json["id"] = id;
-    }
-    return _json;
   }
 }
 
@@ -1586,6 +1272,57 @@ class OperatorResource {
   }
 }
 
+class ProofData {
+  core.List<DifferenceBranch> steps;
+
+  ProofData();
+
+  ProofData.fromJson(core.Map _json) {
+    if (_json.containsKey("steps")) {
+      steps = _json["steps"]
+          .map((value) => new DifferenceBranch.fromJson(value))
+          .toList();
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (steps != null) {
+      _json["steps"] = steps.map((value) => (value).toJson()).toList();
+    }
+    return _json;
+  }
+}
+
+class ProofResource {
+  core.int id;
+  core.List<StepResource> steps;
+
+  ProofResource();
+
+  ProofResource.fromJson(core.Map _json) {
+    if (_json.containsKey("id")) {
+      id = _json["id"];
+    }
+    if (_json.containsKey("steps")) {
+      steps = _json["steps"]
+          .map((value) => new StepResource.fromJson(value))
+          .toList();
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (id != null) {
+      _json["id"] = id;
+    }
+    if (steps != null) {
+      _json["steps"] = steps.map((value) => (value).toJson()).toList();
+    }
+    return _json;
+  }
+}
+
 class Rearrangement {
   core.List<core.int> format;
   core.int position;
@@ -1614,7 +1351,6 @@ class Rearrangement {
 }
 
 class RuleResource {
-  CategoryResource category;
   core.int id;
   ExpressionResource leftExpression;
   ExpressionResource rightExpression;
@@ -1622,9 +1358,6 @@ class RuleResource {
   RuleResource();
 
   RuleResource.fromJson(core.Map _json) {
-    if (_json.containsKey("category")) {
-      category = new CategoryResource.fromJson(_json["category"]);
-    }
     if (_json.containsKey("id")) {
       id = _json["id"];
     }
@@ -1639,9 +1372,6 @@ class RuleResource {
 
   core.Map toJson() {
     var _json = new core.Map();
-    if (category != null) {
-      _json["category"] = (category).toJson();
-    }
     if (id != null) {
       _json["id"] = id;
     }
@@ -1650,6 +1380,78 @@ class RuleResource {
     }
     if (rightExpression != null) {
       _json["rightExpression"] = (rightExpression).toJson();
+    }
+    return _json;
+  }
+}
+
+class StepResource {
+  ExpressionResource expression;
+  core.int id;
+  core.int position;
+  ProofResource proof;
+  core.List<core.int> rearrange;
+  RuleResource rule;
+  /**
+   *
+   * Possible string values are:
+   * - "set" : Set new expression.
+   * - "rule_normal" : substitute a -> b, evaluate b from a
+   * - "rule_invert" : substitute b -> a, evaluate a from b (invert rule sides)
+   * - "rule_mirror" : substitute a -> b, evaluate a from b (mirror evaluation)
+   * - "rule_revert" : substitute b -> a, evaluate b from a (invert and mirror)
+   * - "rearrange" : Rearrange child tree at position.
+   */
+  core.String type;
+
+  StepResource();
+
+  StepResource.fromJson(core.Map _json) {
+    if (_json.containsKey("expression")) {
+      expression = new ExpressionResource.fromJson(_json["expression"]);
+    }
+    if (_json.containsKey("id")) {
+      id = _json["id"];
+    }
+    if (_json.containsKey("position")) {
+      position = _json["position"];
+    }
+    if (_json.containsKey("proof")) {
+      proof = new ProofResource.fromJson(_json["proof"]);
+    }
+    if (_json.containsKey("rearrange")) {
+      rearrange = _json["rearrange"];
+    }
+    if (_json.containsKey("rule")) {
+      rule = new RuleResource.fromJson(_json["rule"]);
+    }
+    if (_json.containsKey("type")) {
+      type = _json["type"];
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (expression != null) {
+      _json["expression"] = (expression).toJson();
+    }
+    if (id != null) {
+      _json["id"] = id;
+    }
+    if (position != null) {
+      _json["position"] = position;
+    }
+    if (proof != null) {
+      _json["proof"] = (proof).toJson();
+    }
+    if (rearrange != null) {
+      _json["rearrange"] = rearrange;
+    }
+    if (rule != null) {
+      _json["rule"] = (rule).toJson();
+    }
+    if (type != null) {
+      _json["type"] = type;
     }
     return _json;
   }
@@ -1685,7 +1487,7 @@ class SubjectResource {
 class TranslationResource {
   core.String content;
   core.int id;
-  LocaleResource locale;
+  LanguageResource language;
 
   TranslationResource();
 
@@ -1696,8 +1498,8 @@ class TranslationResource {
     if (_json.containsKey("id")) {
       id = _json["id"];
     }
-    if (_json.containsKey("locale")) {
-      locale = new LocaleResource.fromJson(_json["locale"]);
+    if (_json.containsKey("language")) {
+      language = new LanguageResource.fromJson(_json["language"]);
     }
   }
 
@@ -1709,8 +1511,8 @@ class TranslationResource {
     if (id != null) {
       _json["id"] = id;
     }
-    if (locale != null) {
-      _json["locale"] = (locale).toJson();
+    if (language != null) {
+      _json["language"] = (language).toJson();
     }
     return _json;
   }
