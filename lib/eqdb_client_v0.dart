@@ -30,43 +30,6 @@ class EqdbApi {
    *
    * Request parameters:
    *
-   * Completes with a [DefinitionResource].
-   *
-   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
-   * error.
-   *
-   * If the used [http.Client] completes with an error when making a REST call,
-   * this method will complete with the same error.
-   */
-  async.Future<DefinitionResource> createDefinition(
-      DefinitionResource request) {
-    var _url = null;
-    var _queryParams = new core.Map();
-    var _uploadMedia = null;
-    var _uploadOptions = null;
-    var _downloadOptions = commons.DownloadOptions.Metadata;
-    var _body = null;
-
-    if (request != null) {
-      _body = convert.JSON.encode((request).toJson());
-    }
-
-    _url = 'definition/create';
-
-    var _response = _requester.request(_url, "POST",
-        body: _body,
-        queryParams: _queryParams,
-        uploadOptions: _uploadOptions,
-        uploadMedia: _uploadMedia,
-        downloadOptions: _downloadOptions);
-    return _response.then((data) => new DefinitionResource.fromJson(data));
-  }
-
-  /**
-   * [request] - The metadata request object.
-   *
-   * Request parameters:
-   *
    * Completes with a [FunctionResource].
    *
    * Completes with a [commons.ApiRequestError] if the API endpoint returned an
@@ -211,6 +174,42 @@ class EqdbApi {
    *
    * Request parameters:
    *
+   * Completes with a [RuleResource].
+   *
+   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
+   * error.
+   *
+   * If the used [http.Client] completes with an error when making a REST call,
+   * this method will complete with the same error.
+   */
+  async.Future<RuleResource> createRule(RuleResource request) {
+    var _url = null;
+    var _queryParams = new core.Map();
+    var _uploadMedia = null;
+    var _uploadOptions = null;
+    var _downloadOptions = commons.DownloadOptions.Metadata;
+    var _body = null;
+
+    if (request != null) {
+      _body = convert.JSON.encode((request).toJson());
+    }
+
+    _url = 'rule/create';
+
+    var _response = _requester.request(_url, "POST",
+        body: _body,
+        queryParams: _queryParams,
+        uploadOptions: _uploadOptions,
+        uploadMedia: _uploadMedia,
+        downloadOptions: _downloadOptions);
+    return _response.then((data) => new RuleResource.fromJson(data));
+  }
+
+  /**
+   * [request] - The metadata request object.
+   *
+   * Request parameters:
+   *
    * Completes with a [SubjectResource].
    *
    * Completes with a [commons.ApiRequestError] if the API endpoint returned an
@@ -289,9 +288,9 @@ class EqdbApi {
   /**
    * Request parameters:
    *
-   * [language] - Query parameter: 'language'.
+   * [id] - Path parameter: 'id'.
    *
-   * Completes with a [ListOfDefinitionResource].
+   * Completes with a [RuleResource].
    *
    * Completes with a [commons.ApiRequestError] if the API endpoint returned an
    * error.
@@ -299,8 +298,7 @@ class EqdbApi {
    * If the used [http.Client] completes with an error when making a REST call,
    * this method will complete with the same error.
    */
-  async.Future<ListOfDefinitionResource> listDefinition(
-      {core.String language}) {
+  async.Future<RuleResource> deleteRule(core.int id) {
     var _url = null;
     var _queryParams = new core.Map();
     var _uploadMedia = null;
@@ -308,11 +306,11 @@ class EqdbApi {
     var _downloadOptions = commons.DownloadOptions.Metadata;
     var _body = null;
 
-    if (language != null) {
-      _queryParams["language"] = [language];
+    if (id == null) {
+      throw new core.ArgumentError("Parameter id is required.");
     }
 
-    _url = 'definition/list';
+    _url = 'rule/' + commons.Escaper.ecapeVariable('$id') + '/delete';
 
     var _response = _requester.request(_url, "GET",
         body: _body,
@@ -320,8 +318,7 @@ class EqdbApi {
         uploadOptions: _uploadOptions,
         uploadMedia: _uploadMedia,
         downloadOptions: _downloadOptions);
-    return _response
-        .then((data) => new ListOfDefinitionResource.fromJson(data));
+    return _response.then((data) => new RuleResource.fromJson(data));
   }
 
   /**
@@ -501,6 +498,42 @@ class EqdbApi {
   /**
    * Request parameters:
    *
+   * [id] - Path parameter: 'id'.
+   *
+   * Completes with a [ListOfStepResource].
+   *
+   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
+   * error.
+   *
+   * If the used [http.Client] completes with an error when making a REST call,
+   * this method will complete with the same error.
+   */
+  async.Future<ListOfStepResource> listProofSteps(core.int id) {
+    var _url = null;
+    var _queryParams = new core.Map();
+    var _uploadMedia = null;
+    var _uploadOptions = null;
+    var _downloadOptions = commons.DownloadOptions.Metadata;
+    var _body = null;
+
+    if (id == null) {
+      throw new core.ArgumentError("Parameter id is required.");
+    }
+
+    _url = 'proof/' + commons.Escaper.ecapeVariable('$id') + '/steps/list';
+
+    var _response = _requester.request(_url, "GET",
+        body: _body,
+        queryParams: _queryParams,
+        uploadOptions: _uploadOptions,
+        uploadMedia: _uploadMedia,
+        downloadOptions: _downloadOptions);
+    return _response.then((data) => new ListOfStepResource.fromJson(data));
+  }
+
+  /**
+   * Request parameters:
+   *
    * [language] - Query parameter: 'language'.
    *
    * Completes with a [ListOfProofResource].
@@ -532,6 +565,42 @@ class EqdbApi {
         uploadMedia: _uploadMedia,
         downloadOptions: _downloadOptions);
     return _response.then((data) => new ListOfProofResource.fromJson(data));
+  }
+
+  /**
+   * Request parameters:
+   *
+   * [language] - Query parameter: 'language'.
+   *
+   * Completes with a [ListOfRuleResource].
+   *
+   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
+   * error.
+   *
+   * If the used [http.Client] completes with an error when making a REST call,
+   * this method will complete with the same error.
+   */
+  async.Future<ListOfRuleResource> listRules({core.String language}) {
+    var _url = null;
+    var _queryParams = new core.Map();
+    var _uploadMedia = null;
+    var _uploadOptions = null;
+    var _downloadOptions = commons.DownloadOptions.Metadata;
+    var _body = null;
+
+    if (language != null) {
+      _queryParams["language"] = [language];
+    }
+
+    _url = 'rule/list';
+
+    var _response = _requester.request(_url, "GET",
+        body: _body,
+        queryParams: _queryParams,
+        uploadOptions: _uploadOptions,
+        uploadMedia: _uploadMedia,
+        downloadOptions: _downloadOptions);
+    return _response.then((data) => new ListOfRuleResource.fromJson(data));
   }
 
   /**
@@ -607,42 +676,6 @@ class EqdbApi {
   }
 
   /**
-   * Request parameters:
-   *
-   * [id] - Path parameter: 'id'.
-   *
-   * Completes with a [ProofResource].
-   *
-   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
-   * error.
-   *
-   * If the used [http.Client] completes with an error when making a REST call,
-   * this method will complete with the same error.
-   */
-  async.Future<ProofResource> readProof(core.int id) {
-    var _url = null;
-    var _queryParams = new core.Map();
-    var _uploadMedia = null;
-    var _uploadOptions = null;
-    var _downloadOptions = commons.DownloadOptions.Metadata;
-    var _body = null;
-
-    if (id == null) {
-      throw new core.ArgumentError("Parameter id is required.");
-    }
-
-    _url = 'proof/' + commons.Escaper.ecapeVariable('$id') + '/read';
-
-    var _response = _requester.request(_url, "GET",
-        body: _body,
-        queryParams: _queryParams,
-        uploadOptions: _uploadOptions,
-        uploadMedia: _uploadMedia,
-        downloadOptions: _downloadOptions);
-    return _response.then((data) => new ProofResource.fromJson(data));
-  }
-
-  /**
    * [request] - The metadata request object.
    *
    * Request parameters:
@@ -656,7 +689,7 @@ class EqdbApi {
    * this method will complete with the same error.
    */
   async.Future<DifferenceBranch> resolveExpressionDifference(
-      DifferenceBranch request) {
+      DifferenceRequest request) {
     var _url = null;
     var _queryParams = new core.Map();
     var _uploadMedia = null;
@@ -678,32 +711,47 @@ class EqdbApi {
         downloadOptions: _downloadOptions);
     return _response.then((data) => new DifferenceBranch.fromJson(data));
   }
-}
 
-class DefinitionResource {
-  core.int id;
-  RuleResource rule;
+  /**
+   * [request] - The metadata request object.
+   *
+   * Request parameters:
+   *
+   * [id] - Path parameter: 'id'.
+   *
+   * Completes with a [FunctionResource].
+   *
+   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
+   * error.
+   *
+   * If the used [http.Client] completes with an error when making a REST call,
+   * this method will complete with the same error.
+   */
+  async.Future<FunctionResource> updateFunctionSubject(
+      FunctionResource request, core.int id) {
+    var _url = null;
+    var _queryParams = new core.Map();
+    var _uploadMedia = null;
+    var _uploadOptions = null;
+    var _downloadOptions = commons.DownloadOptions.Metadata;
+    var _body = null;
 
-  DefinitionResource();
+    if (request != null) {
+      _body = convert.JSON.encode((request).toJson());
+    }
+    if (id == null) {
+      throw new core.ArgumentError("Parameter id is required.");
+    }
 
-  DefinitionResource.fromJson(core.Map _json) {
-    if (_json.containsKey("id")) {
-      id = _json["id"];
-    }
-    if (_json.containsKey("rule")) {
-      rule = new RuleResource.fromJson(_json["rule"]);
-    }
-  }
+    _url = 'function/' + commons.Escaper.ecapeVariable('$id') + '/update';
 
-  core.Map toJson() {
-    var _json = new core.Map();
-    if (id != null) {
-      _json["id"] = id;
-    }
-    if (rule != null) {
-      _json["rule"] = (rule).toJson();
-    }
-    return _json;
+    var _response = _requester.request(_url, "POST",
+        body: _body,
+        queryParams: _queryParams,
+        uploadOptions: _uploadOptions,
+        uploadMedia: _uploadMedia,
+        downloadOptions: _downloadOptions);
+    return _response.then((data) => new FunctionResource.fromJson(data));
   }
 }
 
@@ -740,13 +788,13 @@ class DescriptorResource {
 class DifferenceBranch {
   core.List<DifferenceBranch> arguments;
   core.bool different;
-  core.String leftData;
+  core.String leftExpression;
   core.int position;
   core.List<Rearrangement> rearrangements;
   core.bool resolved;
   core.bool reverseEvaluate;
   core.bool reverseRule;
-  core.String rightData;
+  core.String rightExpression;
   RuleResource rule;
 
   DifferenceBranch();
@@ -760,8 +808,8 @@ class DifferenceBranch {
     if (_json.containsKey("different")) {
       different = _json["different"];
     }
-    if (_json.containsKey("leftData")) {
-      leftData = _json["leftData"];
+    if (_json.containsKey("leftExpression")) {
+      leftExpression = _json["leftExpression"];
     }
     if (_json.containsKey("position")) {
       position = _json["position"];
@@ -780,8 +828,8 @@ class DifferenceBranch {
     if (_json.containsKey("reverseRule")) {
       reverseRule = _json["reverseRule"];
     }
-    if (_json.containsKey("rightData")) {
-      rightData = _json["rightData"];
+    if (_json.containsKey("rightExpression")) {
+      rightExpression = _json["rightExpression"];
     }
     if (_json.containsKey("rule")) {
       rule = new RuleResource.fromJson(_json["rule"]);
@@ -796,8 +844,8 @@ class DifferenceBranch {
     if (different != null) {
       _json["different"] = different;
     }
-    if (leftData != null) {
-      _json["leftData"] = leftData;
+    if (leftExpression != null) {
+      _json["leftExpression"] = leftExpression;
     }
     if (position != null) {
       _json["position"] = position;
@@ -815,11 +863,38 @@ class DifferenceBranch {
     if (reverseRule != null) {
       _json["reverseRule"] = reverseRule;
     }
-    if (rightData != null) {
-      _json["rightData"] = rightData;
+    if (rightExpression != null) {
+      _json["rightExpression"] = rightExpression;
     }
     if (rule != null) {
       _json["rule"] = (rule).toJson();
+    }
+    return _json;
+  }
+}
+
+class DifferenceRequest {
+  core.String leftExpression;
+  core.String rightExpression;
+
+  DifferenceRequest();
+
+  DifferenceRequest.fromJson(core.Map _json) {
+    if (_json.containsKey("leftExpression")) {
+      leftExpression = _json["leftExpression"];
+    }
+    if (_json.containsKey("rightExpression")) {
+      rightExpression = _json["rightExpression"];
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (leftExpression != null) {
+      _json["leftExpression"] = leftExpression;
+    }
+    if (rightExpression != null) {
+      _json["rightExpression"] = rightExpression;
     }
     return _json;
   }
@@ -985,33 +1060,6 @@ class LanguageResource {
   }
 }
 
-class ListOfDefinitionResource extends collection.ListBase<DefinitionResource> {
-  final core.List<DefinitionResource> _inner;
-
-  ListOfDefinitionResource() : _inner = [];
-
-  ListOfDefinitionResource.fromJson(core.List json)
-      : _inner = json
-            .map((value) => new DefinitionResource.fromJson(value))
-            .toList();
-
-  core.List toJson() {
-    return _inner.map((value) => (value).toJson()).toList();
-  }
-
-  DefinitionResource operator [](core.int key) => _inner[key];
-
-  void operator []=(core.int key, DefinitionResource value) {
-    _inner[key] = value;
-  }
-
-  core.int get length => _inner.length;
-
-  void set length(core.int newLength) {
-    _inner.length = newLength;
-  }
-}
-
 class ListOfDescriptorResource extends collection.ListBase<DescriptorResource> {
   final core.List<DescriptorResource> _inner;
 
@@ -1133,6 +1181,56 @@ class ListOfProofResource extends collection.ListBase<ProofResource> {
   ProofResource operator [](core.int key) => _inner[key];
 
   void operator []=(core.int key, ProofResource value) {
+    _inner[key] = value;
+  }
+
+  core.int get length => _inner.length;
+
+  void set length(core.int newLength) {
+    _inner.length = newLength;
+  }
+}
+
+class ListOfRuleResource extends collection.ListBase<RuleResource> {
+  final core.List<RuleResource> _inner;
+
+  ListOfRuleResource() : _inner = [];
+
+  ListOfRuleResource.fromJson(core.List json)
+      : _inner = json.map((value) => new RuleResource.fromJson(value)).toList();
+
+  core.List toJson() {
+    return _inner.map((value) => (value).toJson()).toList();
+  }
+
+  RuleResource operator [](core.int key) => _inner[key];
+
+  void operator []=(core.int key, RuleResource value) {
+    _inner[key] = value;
+  }
+
+  core.int get length => _inner.length;
+
+  void set length(core.int newLength) {
+    _inner.length = newLength;
+  }
+}
+
+class ListOfStepResource extends collection.ListBase<StepResource> {
+  final core.List<StepResource> _inner;
+
+  ListOfStepResource() : _inner = [];
+
+  ListOfStepResource.fromJson(core.List json)
+      : _inner = json.map((value) => new StepResource.fromJson(value)).toList();
+
+  core.List toJson() {
+    return _inner.map((value) => (value).toJson()).toList();
+  }
+
+  StepResource operator [](core.int key) => _inner[key];
+
+  void operator []=(core.int key, StepResource value) {
     _inner[key] = value;
   }
 
@@ -1295,29 +1393,34 @@ class ProofData {
 }
 
 class ProofResource {
+  StepResource firstStep;
   core.int id;
-  core.List<StepResource> steps;
+  StepResource lastStep;
 
   ProofResource();
 
   ProofResource.fromJson(core.Map _json) {
+    if (_json.containsKey("firstStep")) {
+      firstStep = new StepResource.fromJson(_json["firstStep"]);
+    }
     if (_json.containsKey("id")) {
       id = _json["id"];
     }
-    if (_json.containsKey("steps")) {
-      steps = _json["steps"]
-          .map((value) => new StepResource.fromJson(value))
-          .toList();
+    if (_json.containsKey("lastStep")) {
+      lastStep = new StepResource.fromJson(_json["lastStep"]);
     }
   }
 
   core.Map toJson() {
     var _json = new core.Map();
+    if (firstStep != null) {
+      _json["firstStep"] = (firstStep).toJson();
+    }
     if (id != null) {
       _json["id"] = id;
     }
-    if (steps != null) {
-      _json["steps"] = steps.map((value) => (value).toJson()).toList();
+    if (lastStep != null) {
+      _json["lastStep"] = (lastStep).toJson();
     }
     return _json;
   }
@@ -1352,8 +1455,11 @@ class Rearrangement {
 
 class RuleResource {
   core.int id;
+  core.bool isDefinition;
   ExpressionResource leftExpression;
+  ProofResource proof;
   ExpressionResource rightExpression;
+  StepResource step;
 
   RuleResource();
 
@@ -1361,12 +1467,21 @@ class RuleResource {
     if (_json.containsKey("id")) {
       id = _json["id"];
     }
+    if (_json.containsKey("isDefinition")) {
+      isDefinition = _json["isDefinition"];
+    }
     if (_json.containsKey("leftExpression")) {
       leftExpression = new ExpressionResource.fromJson(_json["leftExpression"]);
+    }
+    if (_json.containsKey("proof")) {
+      proof = new ProofResource.fromJson(_json["proof"]);
     }
     if (_json.containsKey("rightExpression")) {
       rightExpression =
           new ExpressionResource.fromJson(_json["rightExpression"]);
+    }
+    if (_json.containsKey("step")) {
+      step = new StepResource.fromJson(_json["step"]);
     }
   }
 
@@ -1375,11 +1490,20 @@ class RuleResource {
     if (id != null) {
       _json["id"] = id;
     }
+    if (isDefinition != null) {
+      _json["isDefinition"] = isDefinition;
+    }
     if (leftExpression != null) {
       _json["leftExpression"] = (leftExpression).toJson();
     }
+    if (proof != null) {
+      _json["proof"] = (proof).toJson();
+    }
     if (rightExpression != null) {
       _json["rightExpression"] = (rightExpression).toJson();
+    }
+    if (step != null) {
+      _json["step"] = (step).toJson();
     }
     return _json;
   }
