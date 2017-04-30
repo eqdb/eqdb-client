@@ -676,6 +676,78 @@ class EqdbApi {
   }
 
   /**
+   * Request parameters:
+   *
+   * [id] - Path parameter: 'id'.
+   *
+   * Completes with a [RuleResource].
+   *
+   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
+   * error.
+   *
+   * If the used [http.Client] completes with an error when making a REST call,
+   * this method will complete with the same error.
+   */
+  async.Future<RuleResource> readRule(core.int id) {
+    var _url = null;
+    var _queryParams = new core.Map();
+    var _uploadMedia = null;
+    var _uploadOptions = null;
+    var _downloadOptions = commons.DownloadOptions.Metadata;
+    var _body = null;
+
+    if (id == null) {
+      throw new core.ArgumentError("Parameter id is required.");
+    }
+
+    _url = 'rule/' + commons.Escaper.ecapeVariable('$id') + '/read';
+
+    var _response = _requester.request(_url, "GET",
+        body: _body,
+        queryParams: _queryParams,
+        uploadOptions: _uploadOptions,
+        uploadMedia: _uploadMedia,
+        downloadOptions: _downloadOptions);
+    return _response.then((data) => new RuleResource.fromJson(data));
+  }
+
+  /**
+   * Request parameters:
+   *
+   * [id] - Path parameter: 'id'.
+   *
+   * Completes with a [StepResource].
+   *
+   * Completes with a [commons.ApiRequestError] if the API endpoint returned an
+   * error.
+   *
+   * If the used [http.Client] completes with an error when making a REST call,
+   * this method will complete with the same error.
+   */
+  async.Future<StepResource> readStep(core.int id) {
+    var _url = null;
+    var _queryParams = new core.Map();
+    var _uploadMedia = null;
+    var _uploadOptions = null;
+    var _downloadOptions = commons.DownloadOptions.Metadata;
+    var _body = null;
+
+    if (id == null) {
+      throw new core.ArgumentError("Parameter id is required.");
+    }
+
+    _url = 'step/' + commons.Escaper.ecapeVariable('$id') + '/read';
+
+    var _response = _requester.request(_url, "GET",
+        body: _body,
+        queryParams: _queryParams,
+        uploadOptions: _uploadOptions,
+        uploadMedia: _uploadMedia,
+        downloadOptions: _downloadOptions);
+    return _response.then((data) => new StepResource.fromJson(data));
+  }
+
+  /**
    * [request] - The metadata request object.
    *
    * Request parameters:
@@ -1371,11 +1443,19 @@ class OperatorResource {
 }
 
 class ProofData {
+  core.int initialRuleId;
+  core.int initialStepId;
   core.List<DifferenceBranch> steps;
 
   ProofData();
 
   ProofData.fromJson(core.Map _json) {
+    if (_json.containsKey("initialRuleId")) {
+      initialRuleId = _json["initialRuleId"];
+    }
+    if (_json.containsKey("initialStepId")) {
+      initialStepId = _json["initialStepId"];
+    }
     if (_json.containsKey("steps")) {
       steps = _json["steps"]
           .map((value) => new DifferenceBranch.fromJson(value))
@@ -1385,6 +1465,12 @@ class ProofData {
 
   core.Map toJson() {
     var _json = new core.Map();
+    if (initialRuleId != null) {
+      _json["initialRuleId"] = initialRuleId;
+    }
+    if (initialStepId != null) {
+      _json["initialStepId"] = initialStepId;
+    }
     if (steps != null) {
       _json["steps"] = steps.map((value) => (value).toJson()).toList();
     }
