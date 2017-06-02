@@ -1,6 +1,6 @@
 // This is a generated file (see the discoveryapis_generator project).
 
-library eqdb_client.eqdb.v0;
+library qedb_client.qedb.v0;
 
 import 'dart:core' as core;
 import 'dart:collection' as collection;
@@ -13,15 +13,15 @@ import 'package:http/http.dart' as http;
 export 'package:_discoveryapis_commons/_discoveryapis_commons.dart'
     show ApiRequestError, DetailedApiRequestError;
 
-const core.String USER_AGENT = 'dart-api-client eqdb/v0';
+const core.String USER_AGENT = 'dart-api-client qedb/v0';
 
-/** EqDB read/write API */
-class EqdbApi {
+/** QEDb read/write API */
+class QedbApi {
   final commons.ApiRequester _requester;
 
-  EqdbApi(http.Client client,
+  QedbApi(http.Client client,
       {core.String rootUrl: "http://localhost:8080/",
-      core.String servicePath: "eqdb/v0/"})
+      core.String servicePath: "qedb/v0/"})
       : _requester =
             new commons.ApiRequester(client, rootUrl, servicePath, USER_AGENT);
 

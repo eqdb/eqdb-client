@@ -2,6 +2,6 @@
 // Use of this source code is governed by an AGPL-3.0-style license
 // that can be found in the LICENSE file.
 
-library eqdb_client;
+library qedb_client;
 
-export 'eqdb_client_v0.dart';
+export 'qedb_client_v0.dart';
