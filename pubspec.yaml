@@ -1,5 +1,5 @@
 name:         qedb_client
-version:      0.1.0
+version:      0.1.1
 author:       Herman Bergwerf <hermanbergwerf@gmail.com>
 description:  QEDb HTTP API client
 homepage:     https://github.com/qedb/eqpg-client
