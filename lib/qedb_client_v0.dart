@@ -1029,15 +1029,16 @@ class FunctionResource {
   /**
    *
    * Possible string values are:
-   * - "word"
-   * - "acronym"
-   * - "abbreviation"
-   * - "symbol"
-   * - "latex"
+   * - "word" : [a-z]+ form of the function name descriptor
+   * - "acronym" : Short form of the function name descriptor
+   * - "abbreviation" : Short form of the function name descriptor
+   * - "symbol" : [a-z]+ form of the function symbol
+   * - "latex" : The keyword is directly related to a LaTeX command
    */
   core.String keywordType;
   core.String latexTemplate;
   core.bool rearrangeable;
+  core.String specialType;
   SubjectResource subject;
 
   FunctionResource();
@@ -1066,6 +1067,9 @@ class FunctionResource {
     }
     if (_json.containsKey("rearrangeable")) {
       rearrangeable = _json["rearrangeable"];
+    }
+    if (_json.containsKey("specialType")) {
+      specialType = _json["specialType"];
     }
     if (_json.containsKey("subject")) {
       subject = new SubjectResource.fromJson(_json["subject"]);
@@ -1097,6 +1101,9 @@ class FunctionResource {
     }
     if (rearrangeable != null) {
       _json["rearrangeable"] = rearrangeable;
+    }
+    if (specialType != null) {
+      _json["specialType"] = specialType;
     }
     if (subject != null) {
       _json["subject"] = (subject).toJson();
@@ -1600,7 +1607,7 @@ class StepResource {
   core.int id;
   core.int position;
   ProofResource proof;
-  core.List<core.int> rearrange;
+  core.List<core.int> rearrangeFormat;
   RuleResource rule;
   /**
    *
@@ -1629,8 +1636,8 @@ class StepResource {
     if (_json.containsKey("proof")) {
       proof = new ProofResource.fromJson(_json["proof"]);
     }
-    if (_json.containsKey("rearrange")) {
-      rearrange = _json["rearrange"];
+    if (_json.containsKey("rearrangeFormat")) {
+      rearrangeFormat = _json["rearrangeFormat"];
     }
     if (_json.containsKey("rule")) {
       rule = new RuleResource.fromJson(_json["rule"]);
@@ -1654,8 +1661,8 @@ class StepResource {
     if (proof != null) {
       _json["proof"] = (proof).toJson();
     }
-    if (rearrange != null) {
-      _json["rearrange"] = rearrange;
+    if (rearrangeFormat != null) {
+      _json["rearrangeFormat"] = rearrangeFormat;
     }
     if (rule != null) {
       _json["rule"] = (rule).toJson();
