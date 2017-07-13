@@ -827,6 +827,54 @@ class QedbApi {
   }
 }
 
+class ConditionProofResource {
+  core.bool adoptCondition;
+  ProofResource followsProof;
+  RuleResource followsRule;
+  core.int id;
+  core.bool selfEvident;
+
+  ConditionProofResource();
+
+  ConditionProofResource.fromJson(core.Map _json) {
+    if (_json.containsKey("adoptCondition")) {
+      adoptCondition = _json["adoptCondition"];
+    }
+    if (_json.containsKey("followsProof")) {
+      followsProof = new ProofResource.fromJson(_json["followsProof"]);
+    }
+    if (_json.containsKey("followsRule")) {
+      followsRule = new RuleResource.fromJson(_json["followsRule"]);
+    }
+    if (_json.containsKey("id")) {
+      id = _json["id"];
+    }
+    if (_json.containsKey("selfEvident")) {
+      selfEvident = _json["selfEvident"];
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (adoptCondition != null) {
+      _json["adoptCondition"] = adoptCondition;
+    }
+    if (followsProof != null) {
+      _json["followsProof"] = (followsProof).toJson();
+    }
+    if (followsRule != null) {
+      _json["followsRule"] = (followsRule).toJson();
+    }
+    if (id != null) {
+      _json["id"] = id;
+    }
+    if (selfEvident != null) {
+      _json["selfEvident"] = selfEvident;
+    }
+    return _json;
+  }
+}
+
 class DescriptorResource {
   core.int id;
   core.List<TranslationResource> translations;
@@ -865,7 +913,7 @@ class DifferenceBranch {
   core.List<Rearrangement> rearrangements;
   core.bool resolved;
   core.bool reverseEvaluate;
-  core.bool reverseRule;
+  core.bool reverseSides;
   core.String rightExpression;
   RuleResource rule;
 
@@ -897,8 +945,8 @@ class DifferenceBranch {
     if (_json.containsKey("reverseEvaluate")) {
       reverseEvaluate = _json["reverseEvaluate"];
     }
-    if (_json.containsKey("reverseRule")) {
-      reverseRule = _json["reverseRule"];
+    if (_json.containsKey("reverseSides")) {
+      reverseSides = _json["reverseSides"];
     }
     if (_json.containsKey("rightExpression")) {
       rightExpression = _json["rightExpression"];
@@ -932,8 +980,8 @@ class DifferenceBranch {
     if (reverseEvaluate != null) {
       _json["reverseEvaluate"] = reverseEvaluate;
     }
-    if (reverseRule != null) {
-      _json["reverseRule"] = reverseRule;
+    if (reverseSides != null) {
+      _json["reverseSides"] = reverseSides;
     }
     if (rightExpression != null) {
       _json["rightExpression"] = rightExpression;
@@ -946,14 +994,24 @@ class DifferenceBranch {
 }
 
 class DifferenceRequest {
+  core.List<FreeSubstituion> freeSubstitutions;
   core.String leftExpression;
+  core.List<core.int> proofIds;
   core.String rightExpression;
 
   DifferenceRequest();
 
   DifferenceRequest.fromJson(core.Map _json) {
+    if (_json.containsKey("freeSubstitutions")) {
+      freeSubstitutions = _json["freeSubstitutions"]
+          .map((value) => new FreeSubstituion.fromJson(value))
+          .toList();
+    }
     if (_json.containsKey("leftExpression")) {
       leftExpression = _json["leftExpression"];
+    }
+    if (_json.containsKey("proofIds")) {
+      proofIds = _json["proofIds"];
     }
     if (_json.containsKey("rightExpression")) {
       rightExpression = _json["rightExpression"];
@@ -962,8 +1020,15 @@ class DifferenceRequest {
 
   core.Map toJson() {
     var _json = new core.Map();
+    if (freeSubstitutions != null) {
+      _json["freeSubstitutions"] =
+          freeSubstitutions.map((value) => (value).toJson()).toList();
+    }
     if (leftExpression != null) {
       _json["leftExpression"] = leftExpression;
+    }
+    if (proofIds != null) {
+      _json["proofIds"] = proofIds;
     }
     if (rightExpression != null) {
       _json["rightExpression"] = rightExpression;
@@ -1015,6 +1080,33 @@ class ExpressionResource {
     }
     if (latex != null) {
       _json["latex"] = latex;
+    }
+    return _json;
+  }
+}
+
+class FreeSubstituion {
+  core.String leftExpression;
+  core.String rightExpression;
+
+  FreeSubstituion();
+
+  FreeSubstituion.fromJson(core.Map _json) {
+    if (_json.containsKey("leftExpression")) {
+      leftExpression = _json["leftExpression"];
+    }
+    if (_json.containsKey("rightExpression")) {
+      rightExpression = _json["rightExpression"];
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (leftExpression != null) {
+      _json["leftExpression"] = leftExpression;
+    }
+    if (rightExpression != null) {
+      _json["rightExpression"] = rightExpression;
     }
     return _json;
   }
@@ -1546,35 +1638,22 @@ class Rearrangement {
   }
 }
 
-class RuleResource {
+class RuleCondition {
   core.int id;
-  core.bool isDefinition;
-  ExpressionResource leftExpression;
-  ProofResource proof;
-  ExpressionResource rightExpression;
-  StepResource step;
+  ConditionProofResource proof;
+  SubstitutionResource substitution;
 
-  RuleResource();
+  RuleCondition();
 
-  RuleResource.fromJson(core.Map _json) {
+  RuleCondition.fromJson(core.Map _json) {
     if (_json.containsKey("id")) {
       id = _json["id"];
     }
-    if (_json.containsKey("isDefinition")) {
-      isDefinition = _json["isDefinition"];
-    }
-    if (_json.containsKey("leftExpression")) {
-      leftExpression = new ExpressionResource.fromJson(_json["leftExpression"]);
-    }
     if (_json.containsKey("proof")) {
-      proof = new ProofResource.fromJson(_json["proof"]);
+      proof = new ConditionProofResource.fromJson(_json["proof"]);
     }
-    if (_json.containsKey("rightExpression")) {
-      rightExpression =
-          new ExpressionResource.fromJson(_json["rightExpression"]);
-    }
-    if (_json.containsKey("step")) {
-      step = new StepResource.fromJson(_json["step"]);
+    if (_json.containsKey("substitution")) {
+      substitution = new SubstitutionResource.fromJson(_json["substitution"]);
     }
   }
 
@@ -1583,20 +1662,69 @@ class RuleResource {
     if (id != null) {
       _json["id"] = id;
     }
+    if (proof != null) {
+      _json["proof"] = (proof).toJson();
+    }
+    if (substitution != null) {
+      _json["substitution"] = (substitution).toJson();
+    }
+    return _json;
+  }
+}
+
+class RuleResource {
+  core.List<RuleCondition> conditions;
+  core.int id;
+  core.bool isDefinition;
+  ProofResource proof;
+  StepResource step;
+  SubstitutionResource substitution;
+
+  RuleResource();
+
+  RuleResource.fromJson(core.Map _json) {
+    if (_json.containsKey("conditions")) {
+      conditions = _json["conditions"]
+          .map((value) => new RuleCondition.fromJson(value))
+          .toList();
+    }
+    if (_json.containsKey("id")) {
+      id = _json["id"];
+    }
+    if (_json.containsKey("isDefinition")) {
+      isDefinition = _json["isDefinition"];
+    }
+    if (_json.containsKey("proof")) {
+      proof = new ProofResource.fromJson(_json["proof"]);
+    }
+    if (_json.containsKey("step")) {
+      step = new StepResource.fromJson(_json["step"]);
+    }
+    if (_json.containsKey("substitution")) {
+      substitution = new SubstitutionResource.fromJson(_json["substitution"]);
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (conditions != null) {
+      _json["conditions"] =
+          conditions.map((value) => (value).toJson()).toList();
+    }
+    if (id != null) {
+      _json["id"] = id;
+    }
     if (isDefinition != null) {
       _json["isDefinition"] = isDefinition;
-    }
-    if (leftExpression != null) {
-      _json["leftExpression"] = (leftExpression).toJson();
     }
     if (proof != null) {
       _json["proof"] = (proof).toJson();
     }
-    if (rightExpression != null) {
-      _json["rightExpression"] = (rightExpression).toJson();
-    }
     if (step != null) {
       _json["step"] = (step).toJson();
+    }
+    if (substitution != null) {
+      _json["substitution"] = (substitution).toJson();
     }
     return _json;
   }
@@ -1609,15 +1737,17 @@ class StepResource {
   ProofResource proof;
   core.List<core.int> rearrangeFormat;
   RuleResource rule;
+  SubstitutionResource substitution;
   /**
    *
    * Possible string values are:
-   * - "set" : Set new expression.
-   * - "rule_normal" : substitute a -> b, evaluate b from a
-   * - "rule_invert" : substitute b -> a, evaluate a from b (invert rule sides)
-   * - "rule_mirror" : substitute a -> b, evaluate a from b (mirror evaluation)
-   * - "rule_revert" : substitute b -> a, evaluate b from a (invert and mirror)
-   * - "rearrange" : Rearrange child tree at position.
+   * - "set" : Set expression to arbitrary value.
+   * - "copy_proof" : Copy first and last expression of a proof.
+   * - "copy_rule" : Copy left and right expression of a rule.
+   * - "rearrange" : Rearrange using the given format.
+   * - "substitute_rule" : Apply a rule based substitution.
+   * - "substitute_proof" : Apply a proof based substitution.
+   * - "substitute_free" : Apply a free substitution (creates condition).
    */
   core.String type;
 
@@ -1641,6 +1771,9 @@ class StepResource {
     }
     if (_json.containsKey("rule")) {
       rule = new RuleResource.fromJson(_json["rule"]);
+    }
+    if (_json.containsKey("substitution")) {
+      substitution = new SubstitutionResource.fromJson(_json["substitution"]);
     }
     if (_json.containsKey("type")) {
       type = _json["type"];
@@ -1666,6 +1799,9 @@ class StepResource {
     }
     if (rule != null) {
       _json["rule"] = (rule).toJson();
+    }
+    if (substitution != null) {
+      _json["substitution"] = (substitution).toJson();
     }
     if (type != null) {
       _json["type"] = type;
@@ -1696,6 +1832,41 @@ class SubjectResource {
     }
     if (id != null) {
       _json["id"] = id;
+    }
+    return _json;
+  }
+}
+
+class SubstitutionResource {
+  core.int id;
+  ExpressionResource leftExpression;
+  ExpressionResource rightExpression;
+
+  SubstitutionResource();
+
+  SubstitutionResource.fromJson(core.Map _json) {
+    if (_json.containsKey("id")) {
+      id = _json["id"];
+    }
+    if (_json.containsKey("leftExpression")) {
+      leftExpression = new ExpressionResource.fromJson(_json["leftExpression"]);
+    }
+    if (_json.containsKey("rightExpression")) {
+      rightExpression =
+          new ExpressionResource.fromJson(_json["rightExpression"]);
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (id != null) {
+      _json["id"] = id;
+    }
+    if (leftExpression != null) {
+      _json["leftExpression"] = (leftExpression).toJson();
+    }
+    if (rightExpression != null) {
+      _json["rightExpression"] = (rightExpression).toJson();
     }
     return _json;
   }
