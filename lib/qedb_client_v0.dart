@@ -827,61 +827,6 @@ class QedbApi {
   }
 }
 
-class ConditionProof {
-  core.int conditionId;
-  ProofResource followsProof;
-  RuleResource followsRule;
-  core.bool reverseItself;
-  core.bool reverseTarget;
-  core.bool selfEvident;
-
-  ConditionProof();
-
-  ConditionProof.fromJson(core.Map _json) {
-    if (_json.containsKey("conditionId")) {
-      conditionId = _json["conditionId"];
-    }
-    if (_json.containsKey("followsProof")) {
-      followsProof = new ProofResource.fromJson(_json["followsProof"]);
-    }
-    if (_json.containsKey("followsRule")) {
-      followsRule = new RuleResource.fromJson(_json["followsRule"]);
-    }
-    if (_json.containsKey("reverseItself")) {
-      reverseItself = _json["reverseItself"];
-    }
-    if (_json.containsKey("reverseTarget")) {
-      reverseTarget = _json["reverseTarget"];
-    }
-    if (_json.containsKey("selfEvident")) {
-      selfEvident = _json["selfEvident"];
-    }
-  }
-
-  core.Map toJson() {
-    var _json = new core.Map();
-    if (conditionId != null) {
-      _json["conditionId"] = conditionId;
-    }
-    if (followsProof != null) {
-      _json["followsProof"] = (followsProof).toJson();
-    }
-    if (followsRule != null) {
-      _json["followsRule"] = (followsRule).toJson();
-    }
-    if (reverseItself != null) {
-      _json["reverseItself"] = reverseItself;
-    }
-    if (reverseTarget != null) {
-      _json["reverseTarget"] = reverseTarget;
-    }
-    if (selfEvident != null) {
-      _json["selfEvident"] = selfEvident;
-    }
-    return _json;
-  }
-}
-
 class ConditionProofResource {
   core.bool adoptCondition;
   ProofResource followsProof;
@@ -976,17 +921,13 @@ class DescriptorResource {
 
 class DifferenceBranch {
   core.List<DifferenceBranch> arguments;
-  core.List<ConditionProof> conditionProofs;
   core.bool different;
   core.String leftExpression;
   core.int position;
-  ProofResource proof;
   core.List<Rearrangement> rearrangements;
   core.bool resolved;
-  core.bool reverseItself;
-  core.bool reverseTarget;
   core.String rightExpression;
-  RuleResource rule;
+  SubsSearchResult substitution;
 
   DifferenceBranch();
 
@@ -994,11 +935,6 @@ class DifferenceBranch {
     if (_json.containsKey("arguments")) {
       arguments = _json["arguments"]
           .map((value) => new DifferenceBranch.fromJson(value))
-          .toList();
-    }
-    if (_json.containsKey("conditionProofs")) {
-      conditionProofs = _json["conditionProofs"]
-          .map((value) => new ConditionProof.fromJson(value))
           .toList();
     }
     if (_json.containsKey("different")) {
@@ -1010,9 +946,6 @@ class DifferenceBranch {
     if (_json.containsKey("position")) {
       position = _json["position"];
     }
-    if (_json.containsKey("proof")) {
-      proof = new ProofResource.fromJson(_json["proof"]);
-    }
     if (_json.containsKey("rearrangements")) {
       rearrangements = _json["rearrangements"]
           .map((value) => new Rearrangement.fromJson(value))
@@ -1021,17 +954,11 @@ class DifferenceBranch {
     if (_json.containsKey("resolved")) {
       resolved = _json["resolved"];
     }
-    if (_json.containsKey("reverseItself")) {
-      reverseItself = _json["reverseItself"];
-    }
-    if (_json.containsKey("reverseTarget")) {
-      reverseTarget = _json["reverseTarget"];
-    }
     if (_json.containsKey("rightExpression")) {
       rightExpression = _json["rightExpression"];
     }
-    if (_json.containsKey("rule")) {
-      rule = new RuleResource.fromJson(_json["rule"]);
+    if (_json.containsKey("substitution")) {
+      substitution = new SubsSearchResult.fromJson(_json["substitution"]);
     }
   }
 
@@ -1039,10 +966,6 @@ class DifferenceBranch {
     var _json = new core.Map();
     if (arguments != null) {
       _json["arguments"] = arguments.map((value) => (value).toJson()).toList();
-    }
-    if (conditionProofs != null) {
-      _json["conditionProofs"] =
-          conditionProofs.map((value) => (value).toJson()).toList();
     }
     if (different != null) {
       _json["different"] = different;
@@ -1053,9 +976,6 @@ class DifferenceBranch {
     if (position != null) {
       _json["position"] = position;
     }
-    if (proof != null) {
-      _json["proof"] = (proof).toJson();
-    }
     if (rearrangements != null) {
       _json["rearrangements"] =
           rearrangements.map((value) => (value).toJson()).toList();
@@ -1063,17 +983,11 @@ class DifferenceBranch {
     if (resolved != null) {
       _json["resolved"] = resolved;
     }
-    if (reverseItself != null) {
-      _json["reverseItself"] = reverseItself;
-    }
-    if (reverseTarget != null) {
-      _json["reverseTarget"] = reverseTarget;
-    }
     if (rightExpression != null) {
       _json["rightExpression"] = rightExpression;
     }
-    if (rule != null) {
-      _json["rule"] = (rule).toJson();
+    if (substitution != null) {
+      _json["substitution"] = (substitution).toJson();
     }
     return _json;
   }
@@ -1918,6 +1832,127 @@ class SubjectResource {
     }
     if (id != null) {
       _json["id"] = id;
+    }
+    return _json;
+  }
+}
+
+class SubsCondition {
+  core.int id;
+
+  SubsCondition();
+
+  SubsCondition.fromJson(core.Map _json) {
+    if (_json.containsKey("id")) {
+      id = _json["id"];
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (id != null) {
+      _json["id"] = id;
+    }
+    return _json;
+  }
+}
+
+class SubsEntry {
+  core.List<SubsCondition> conditions;
+  core.int referenceId;
+  SubsType type;
+
+  SubsEntry();
+
+  SubsEntry.fromJson(core.Map _json) {
+    if (_json.containsKey("conditions")) {
+      conditions = _json["conditions"]
+          .map((value) => new SubsCondition.fromJson(value))
+          .toList();
+    }
+    if (_json.containsKey("referenceId")) {
+      referenceId = _json["referenceId"];
+    }
+    if (_json.containsKey("type")) {
+      type = new SubsType.fromJson(_json["type"]);
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (conditions != null) {
+      _json["conditions"] =
+          conditions.map((value) => (value).toJson()).toList();
+    }
+    if (referenceId != null) {
+      _json["referenceId"] = referenceId;
+    }
+    if (type != null) {
+      _json["type"] = (type).toJson();
+    }
+    return _json;
+  }
+}
+
+class SubsSearchResult {
+  core.List<SubsSearchResult> conditionProofs;
+  SubsEntry entry;
+  core.bool reverseItself;
+  core.bool reverseTarget;
+
+  SubsSearchResult();
+
+  SubsSearchResult.fromJson(core.Map _json) {
+    if (_json.containsKey("conditionProofs")) {
+      conditionProofs = _json["conditionProofs"]
+          .map((value) => new SubsSearchResult.fromJson(value))
+          .toList();
+    }
+    if (_json.containsKey("entry")) {
+      entry = new SubsEntry.fromJson(_json["entry"]);
+    }
+    if (_json.containsKey("reverseItself")) {
+      reverseItself = _json["reverseItself"];
+    }
+    if (_json.containsKey("reverseTarget")) {
+      reverseTarget = _json["reverseTarget"];
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (conditionProofs != null) {
+      _json["conditionProofs"] =
+          conditionProofs.map((value) => (value).toJson()).toList();
+    }
+    if (entry != null) {
+      _json["entry"] = (entry).toJson();
+    }
+    if (reverseItself != null) {
+      _json["reverseItself"] = reverseItself;
+    }
+    if (reverseTarget != null) {
+      _json["reverseTarget"] = reverseTarget;
+    }
+    return _json;
+  }
+}
+
+class SubsType {
+  core.int index;
+
+  SubsType();
+
+  SubsType.fromJson(core.Map _json) {
+    if (_json.containsKey("index")) {
+      index = _json["index"];
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (index != null) {
+      _json["index"] = index;
     }
     return _json;
   }
