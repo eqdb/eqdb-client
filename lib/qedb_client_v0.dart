@@ -994,44 +994,30 @@ class DifferenceBranch {
 }
 
 class DifferenceRequest {
-  core.List<FreeSubstituion> freeSubstitutions;
-  core.String leftExpression;
-  core.List<core.int> proofIds;
-  core.String rightExpression;
+  core.List<RpcSubs> freeConditions;
+  RpcSubs target;
 
   DifferenceRequest();
 
   DifferenceRequest.fromJson(core.Map _json) {
-    if (_json.containsKey("freeSubstitutions")) {
-      freeSubstitutions = _json["freeSubstitutions"]
-          .map((value) => new FreeSubstituion.fromJson(value))
+    if (_json.containsKey("freeConditions")) {
+      freeConditions = _json["freeConditions"]
+          .map((value) => new RpcSubs.fromJson(value))
           .toList();
     }
-    if (_json.containsKey("leftExpression")) {
-      leftExpression = _json["leftExpression"];
-    }
-    if (_json.containsKey("proofIds")) {
-      proofIds = _json["proofIds"];
-    }
-    if (_json.containsKey("rightExpression")) {
-      rightExpression = _json["rightExpression"];
+    if (_json.containsKey("target")) {
+      target = new RpcSubs.fromJson(_json["target"]);
     }
   }
 
   core.Map toJson() {
     var _json = new core.Map();
-    if (freeSubstitutions != null) {
-      _json["freeSubstitutions"] =
-          freeSubstitutions.map((value) => (value).toJson()).toList();
+    if (freeConditions != null) {
+      _json["freeConditions"] =
+          freeConditions.map((value) => (value).toJson()).toList();
     }
-    if (leftExpression != null) {
-      _json["leftExpression"] = leftExpression;
-    }
-    if (proofIds != null) {
-      _json["proofIds"] = proofIds;
-    }
-    if (rightExpression != null) {
-      _json["rightExpression"] = rightExpression;
+    if (target != null) {
+      _json["target"] = (target).toJson();
     }
     return _json;
   }
@@ -1080,33 +1066,6 @@ class ExpressionResource {
     }
     if (latex != null) {
       _json["latex"] = latex;
-    }
-    return _json;
-  }
-}
-
-class FreeSubstituion {
-  core.String leftExpression;
-  core.String rightExpression;
-
-  FreeSubstituion();
-
-  FreeSubstituion.fromJson(core.Map _json) {
-    if (_json.containsKey("leftExpression")) {
-      leftExpression = _json["leftExpression"];
-    }
-    if (_json.containsKey("rightExpression")) {
-      rightExpression = _json["rightExpression"];
-    }
-  }
-
-  core.Map toJson() {
-    var _json = new core.Map();
-    if (leftExpression != null) {
-      _json["leftExpression"] = leftExpression;
-    }
-    if (rightExpression != null) {
-      _json["rightExpression"] = rightExpression;
     }
     return _json;
   }
@@ -1633,6 +1592,33 @@ class Rearrangement {
     }
     if (position != null) {
       _json["position"] = position;
+    }
+    return _json;
+  }
+}
+
+class RpcSubs {
+  core.String left;
+  core.String right;
+
+  RpcSubs();
+
+  RpcSubs.fromJson(core.Map _json) {
+    if (_json.containsKey("left")) {
+      left = _json["left"];
+    }
+    if (_json.containsKey("right")) {
+      right = _json["right"];
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (left != null) {
+      _json["left"] = left;
+    }
+    if (right != null) {
+      _json["right"] = right;
     }
     return _json;
   }
