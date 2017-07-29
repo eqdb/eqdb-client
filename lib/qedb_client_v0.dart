@@ -752,7 +752,7 @@ class QedbApi {
    *
    * Request parameters:
    *
-   * Completes with a [DifferenceBranch].
+   * Completes with a [ResolveBranch].
    *
    * Completes with a [commons.ApiRequestError] if the API endpoint returned an
    * error.
@@ -760,8 +760,7 @@ class QedbApi {
    * If the used [http.Client] completes with an error when making a REST call,
    * this method will complete with the same error.
    */
-  async.Future<DifferenceBranch> resolveExpressionDifference(
-      DifferenceRequest request) {
+  async.Future<ResolveBranch> resolveSubstitution(ResolveRequest request) {
     var _url = null;
     var _queryParams = new core.Map();
     var _uploadMedia = null;
@@ -773,7 +772,7 @@ class QedbApi {
       _body = convert.JSON.encode((request).toJson());
     }
 
-    _url = 'difference/resolve';
+    _url = 'resolver/resolve';
 
     var _response = _requester.request(_url, "POST",
         body: _body,
@@ -781,7 +780,7 @@ class QedbApi {
         uploadOptions: _uploadOptions,
         uploadMedia: _uploadMedia,
         downloadOptions: _downloadOptions);
-    return _response.then((data) => new DifferenceBranch.fromJson(data));
+    return _response.then((data) => new ResolveBranch.fromJson(data));
   }
 
   /**
@@ -914,110 +913,6 @@ class DescriptorResource {
     if (translations != null) {
       _json["translations"] =
           translations.map((value) => (value).toJson()).toList();
-    }
-    return _json;
-  }
-}
-
-class DifferenceBranch {
-  core.List<DifferenceBranch> arguments;
-  core.bool different;
-  core.String leftExpression;
-  core.int position;
-  core.List<Rearrangement> rearrangements;
-  core.bool resolved;
-  core.String rightExpression;
-  SubsSearchResult substitution;
-
-  DifferenceBranch();
-
-  DifferenceBranch.fromJson(core.Map _json) {
-    if (_json.containsKey("arguments")) {
-      arguments = _json["arguments"]
-          .map((value) => new DifferenceBranch.fromJson(value))
-          .toList();
-    }
-    if (_json.containsKey("different")) {
-      different = _json["different"];
-    }
-    if (_json.containsKey("leftExpression")) {
-      leftExpression = _json["leftExpression"];
-    }
-    if (_json.containsKey("position")) {
-      position = _json["position"];
-    }
-    if (_json.containsKey("rearrangements")) {
-      rearrangements = _json["rearrangements"]
-          .map((value) => new Rearrangement.fromJson(value))
-          .toList();
-    }
-    if (_json.containsKey("resolved")) {
-      resolved = _json["resolved"];
-    }
-    if (_json.containsKey("rightExpression")) {
-      rightExpression = _json["rightExpression"];
-    }
-    if (_json.containsKey("substitution")) {
-      substitution = new SubsSearchResult.fromJson(_json["substitution"]);
-    }
-  }
-
-  core.Map toJson() {
-    var _json = new core.Map();
-    if (arguments != null) {
-      _json["arguments"] = arguments.map((value) => (value).toJson()).toList();
-    }
-    if (different != null) {
-      _json["different"] = different;
-    }
-    if (leftExpression != null) {
-      _json["leftExpression"] = leftExpression;
-    }
-    if (position != null) {
-      _json["position"] = position;
-    }
-    if (rearrangements != null) {
-      _json["rearrangements"] =
-          rearrangements.map((value) => (value).toJson()).toList();
-    }
-    if (resolved != null) {
-      _json["resolved"] = resolved;
-    }
-    if (rightExpression != null) {
-      _json["rightExpression"] = rightExpression;
-    }
-    if (substitution != null) {
-      _json["substitution"] = (substitution).toJson();
-    }
-    return _json;
-  }
-}
-
-class DifferenceRequest {
-  core.List<RpcSubs> freeConditions;
-  RpcSubs target;
-
-  DifferenceRequest();
-
-  DifferenceRequest.fromJson(core.Map _json) {
-    if (_json.containsKey("freeConditions")) {
-      freeConditions = _json["freeConditions"]
-          .map((value) => new RpcSubs.fromJson(value))
-          .toList();
-    }
-    if (_json.containsKey("target")) {
-      target = new RpcSubs.fromJson(_json["target"]);
-    }
-  }
-
-  core.Map toJson() {
-    var _json = new core.Map();
-    if (freeConditions != null) {
-      _json["freeConditions"] =
-          freeConditions.map((value) => (value).toJson()).toList();
-    }
-    if (target != null) {
-      _json["target"] = (target).toJson();
     }
     return _json;
   }
@@ -1503,7 +1398,7 @@ class OperatorResource {
 class ProofData {
   core.int initialRuleId;
   core.int initialStepId;
-  core.List<DifferenceBranch> steps;
+  core.List<ResolveBranch> steps;
 
   ProofData();
 
@@ -1516,7 +1411,7 @@ class ProofData {
     }
     if (_json.containsKey("steps")) {
       steps = _json["steps"]
-          .map((value) => new DifferenceBranch.fromJson(value))
+          .map((value) => new ResolveBranch.fromJson(value))
           .toList();
     }
   }
@@ -1592,6 +1487,103 @@ class Rearrangement {
     }
     if (position != null) {
       _json["position"] = position;
+    }
+    return _json;
+  }
+}
+
+class ResolveBranch {
+  core.List<ResolveBranch> arguments;
+  core.bool different;
+  core.int position;
+  core.List<Rearrangement> rearrangements;
+  core.bool resolved;
+  RpcSubs subs;
+  SubsSearchResult substitution;
+
+  ResolveBranch();
+
+  ResolveBranch.fromJson(core.Map _json) {
+    if (_json.containsKey("arguments")) {
+      arguments = _json["arguments"]
+          .map((value) => new ResolveBranch.fromJson(value))
+          .toList();
+    }
+    if (_json.containsKey("different")) {
+      different = _json["different"];
+    }
+    if (_json.containsKey("position")) {
+      position = _json["position"];
+    }
+    if (_json.containsKey("rearrangements")) {
+      rearrangements = _json["rearrangements"]
+          .map((value) => new Rearrangement.fromJson(value))
+          .toList();
+    }
+    if (_json.containsKey("resolved")) {
+      resolved = _json["resolved"];
+    }
+    if (_json.containsKey("subs")) {
+      subs = new RpcSubs.fromJson(_json["subs"]);
+    }
+    if (_json.containsKey("substitution")) {
+      substitution = new SubsSearchResult.fromJson(_json["substitution"]);
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (arguments != null) {
+      _json["arguments"] = arguments.map((value) => (value).toJson()).toList();
+    }
+    if (different != null) {
+      _json["different"] = different;
+    }
+    if (position != null) {
+      _json["position"] = position;
+    }
+    if (rearrangements != null) {
+      _json["rearrangements"] =
+          rearrangements.map((value) => (value).toJson()).toList();
+    }
+    if (resolved != null) {
+      _json["resolved"] = resolved;
+    }
+    if (subs != null) {
+      _json["subs"] = (subs).toJson();
+    }
+    if (substitution != null) {
+      _json["substitution"] = (substitution).toJson();
+    }
+    return _json;
+  }
+}
+
+class ResolveRequest {
+  core.List<RpcSubs> freeConditions;
+  RpcSubs target;
+
+  ResolveRequest();
+
+  ResolveRequest.fromJson(core.Map _json) {
+    if (_json.containsKey("freeConditions")) {
+      freeConditions = _json["freeConditions"]
+          .map((value) => new RpcSubs.fromJson(value))
+          .toList();
+    }
+    if (_json.containsKey("target")) {
+      target = new RpcSubs.fromJson(_json["target"]);
+    }
+  }
+
+  core.Map toJson() {
+    var _json = new core.Map();
+    if (freeConditions != null) {
+      _json["freeConditions"] =
+          freeConditions.map((value) => (value).toJson()).toList();
+    }
+    if (target != null) {
+      _json["target"] = (target).toJson();
     }
     return _json;
   }
