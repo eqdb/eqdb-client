@@ -1396,6 +1396,7 @@ class OperatorResource {
 }
 
 class ProofData {
+  core.List<RpcSubs> freeConditions;
   core.int initialRuleId;
   core.int initialStepId;
   core.List<ResolveBranch> steps;
@@ -1403,6 +1404,11 @@ class ProofData {
   ProofData();
 
   ProofData.fromJson(core.Map _json) {
+    if (_json.containsKey("freeConditions")) {
+      freeConditions = _json["freeConditions"]
+          .map((value) => new RpcSubs.fromJson(value))
+          .toList();
+    }
     if (_json.containsKey("initialRuleId")) {
       initialRuleId = _json["initialRuleId"];
     }
@@ -1418,6 +1424,10 @@ class ProofData {
 
   core.Map toJson() {
     var _json = new core.Map();
+    if (freeConditions != null) {
+      _json["freeConditions"] =
+          freeConditions.map((value) => (value).toJson()).toList();
+    }
     if (initialRuleId != null) {
       _json["initialRuleId"] = initialRuleId;
     }
